@@ -1,0 +1,57 @@
+<p>BUG Page!!!</p>
+
+<form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm.value)">
+    <div class="form-group mx-4">
+        <input  type="text"
+                class="form-control"
+                placeholder="Title"
+                name="fname"
+                ngModel
+                required/>
+    </div>
+    <div class="form-group mx-4">
+        <input  type="text"
+                class="form-control"
+                placeholder="Description"
+                name="lname"
+                maxlength="256"
+                ngModel
+                required/>
+    </div>
+    <div class="form-group mx-4">
+        <input  type="text"
+                class="form-control"
+                placeholder="Email"
+                name="email"
+                maxlength="256"
+                ngModel
+                required
+                email/>
+    </div>
+    <div class="form-group mx-4">
+        <input  type="text"
+                class="form-control"
+                placeholder="Password"
+                name="password"
+                maxlength="256"
+                ngModel
+                required/>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        <!-- Type = "submit" will submit the form
+             Type = "button" to ensure pushing it will not submit this form. -->
+        <button class="btn btn-sm btn-primary mr-4" 
+                type="submit" 
+                [disabled]="!bugForm.valid">
+            Submit
+        </button>
+    </div>
+</form>
+
+<input  type="number" #bugNum  placeholder="Bug ID"/>
+
+<!-- Works -->
+<!-- <button class="btn btn-sm btn-warning" (click)='onDeleteBug(5)'>Delete</button> -->
+<button class="btn btn-sm btn-warning" (click)='onDeleteBug(bugNum.value)'>Delete</button>
+
+<button class="btn btn-small btn-success" (click)="onGetBug()">GET</button>
