@@ -37,6 +37,8 @@
                 ngModel
                 required/>
     </div>
+
+    <!-- POST / register new user -->
     <div class="d-flex justify-content-center mt-4">
         <!-- Type = "submit" will submit the form
              Type = "button" to ensure pushing it will not submit this form. -->
@@ -50,8 +52,16 @@
 
 <input  type="number" #bugNum  placeholder="Bug ID"/>
 
-<!-- Works -->
-<!-- <button class="btn btn-sm btn-warning" (click)='onDeleteBug(5)'>Delete</button> -->
+<!-- DELETE -->
 <button class="btn btn-sm btn-warning" (click)='onDeleteBug(bugNum.value)'>Delete</button>
 
-<button class="btn btn-small btn-success" (click)="onGetBug()">GET</button>
+<!-- GET -->
+<button class="btn btn-small btn-success" (click)="onGetBug(bugNum.value)">GET</button>
+<!-- GET ALL -->
+<button class="btn-api btn btn-sm btn-primary" (click)="onGetAllBugs()">GET-ALL</button>
+
+<!-- PUT / update user -->
+<button class="btn btn-sm btn-primary" (click)="onUpdateBug(bugNum.value, bugForm.value)">Update</button>
+
+<!-- Display bugsObj -->
+<button class="btn btn-primary" (click)="onDisplayObj()">Display</button>

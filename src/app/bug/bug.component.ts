@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-// import { HttpClientModule } from '@angular/common/http'
 import { NgForm } from '@angular/forms';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -12,13 +12,18 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./bug.component.css']
 })
 
+
 export class BugComponent implements OnInit {
+  bugsObj: {} = {};
 
   constructor( private http: HttpClient ) { }
 
   ngOnInit(): void {
+    //-- GET all bugs whenever this page/route loads
+    this.getAllBugs();
   }
 
+  //-- For ALL (GET/POST/PUT/DELETE/...), you need the subscribe to send the request
   onSubmitBug(bugData: {  fname: string, 
                           lname: string, 
                           email: string, 
@@ -28,37 +33,55 @@ export class BugComponent implements OnInit {
             lname: bugData.lname,
             email: bugData.email,
             password: bugData.password,
-            deleted_flag: '0'
-          }) 
+            deleted_flag: '0' }) 
       .subscribe(responseData => { 
           console.log(responseData);
       });
   }
 
-onGetBug( ) {
+  onUpdateBug(id: string, bugData: {  fname: string,
+                                      lname: string, 
+                                      email: string, 
+                                      password: Blob }) {
+      this.http.put('http://localhost:3000/users/' + id, 
+                    { fname: bugData.fname,
+                      lname: bugData.lname,
+                      email: bugData.email,
+                      password: bugData.password,
+                      deleted_flag: '0' }) 
+            .subscribe(responseData => {
+                console.log(responseData);
+            });
+  }
+
+  onGetBug(id: string ) {
+      this.http.get('http://localhost:3000/users/' + id) 
+          .subscribe(responseData => { 
+          console.log(responseData);
+          });
+  }
+
+  onGetAllBugs() {
+    this.getAllBugs();
+  }
+
+  private getAllBugs() {
     this.http.get('http://localhost:3000/users/') 
         .subscribe(responseData => { 
-        console.log(responseData);
-        });
-}
-
-////-- Works
-// onDeleteBug(num: number) {
-//     this.http.delete('http://localhost:3000/users/10/' )
-//       .subscribe(responseData => {
-//           console.log(responseData);
-//       });
-//     console.log('Bug deleted');
-// }
-
-  onDeleteBug(num: string) {
-  // onDeleteBug() {
-      // this.http.delete('http://localhost:3000/users/12/' )
-      this.http.delete('http://localhost:3000/users/' + num )
-
-        .subscribe(responseData => {
+            this.bugsObj = responseData;
             console.log(responseData);
-        });
+        });    
+  }
+
+  onDisplayObj() {
+    console.log(this.bugsObj);
+  }
+
+  onDeleteBug(id: string) {
+      this.http.delete('http://localhost:3000/users/' + id )
+          .subscribe(responseData => {
+              console.log(responseData);
+          });
       console.log('Bug deleted');
   }
 }
