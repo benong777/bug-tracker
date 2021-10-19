@@ -12,6 +12,7 @@ import { SignupComponent } from './signup/signup.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
 import { BugComponent } from './bug/bug.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
     SignupComponent,
     UsersComponent,
     UserComponent,
-    BugComponent
+    BugComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

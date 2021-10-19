@@ -56,12 +56,20 @@
 <button class="btn btn-sm btn-warning" (click)='onDeleteBug(bugNum.value)'>Delete</button>
 
 <!-- GET -->
-<button class="btn btn-small btn-success" (click)="onGetBug(bugNum.value)">GET</button>
+<button class="btn btn-sm btn-success" (click)="onGetBug(bugNum.value)">GET</button>
 <!-- GET ALL -->
-<button class="btn-api btn btn-sm btn-primary" (click)="onGetAllBugs()">GET-ALL</button>
+<button class="btn btn-sm btn-primary" (click)="onGetAllBugs()">GET-ALL</button>
+
+<!-- GET ALL (ARRAY)-->
+<button class="btn btn-success" (click)="onGetAllArray()">GET-ALL-ARRAY</button>
 
 <!-- PUT / update user -->
 <button class="btn btn-sm btn-primary" (click)="onUpdateBug(bugNum.value, bugForm.value)">Update</button>
 
 <!-- Display bugsObj -->
 <button class="btn btn-primary" (click)="onDisplayObj()">Display</button>
+
+
+<div class="row">
+    <p *ngIf="isLoading">LOADING...</p>
+</div>

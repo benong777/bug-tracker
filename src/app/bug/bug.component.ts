@@ -15,6 +15,8 @@ import { map } from 'rxjs/operators';
 
 export class BugComponent implements OnInit {
   bugsObj: {} = {};
+  testArray: [] = [];
+  isLoading = false;
 
   constructor( private http: HttpClient ) { }
 
@@ -57,7 +59,7 @@ export class BugComponent implements OnInit {
   onGetBug(id: string ) {
       this.http.get('http://localhost:3000/users/' + id) 
           .subscribe(responseData => { 
-          console.log(responseData);
+              console.log(responseData);
           });
   }
 
@@ -66,11 +68,31 @@ export class BugComponent implements OnInit {
   }
 
   private getAllBugs() {
+    this.isLoading = true;
     this.http.get('http://localhost:3000/users/') 
         .subscribe(responseData => { 
             this.bugsObj = responseData;
             console.log(responseData);
+            this.isLoading = false;
         });    
+  }
+
+  onGetAllArray() {
+    this.http.get('http://localhost:3000/users/') 
+        // .pipe( map(responseData => {
+        //     const bugsArray = [];
+        //     for (const key in responseData) {
+        //       if (responseData.hasOwnProperty(key)) {
+        //         bugsArray.push(responseData[key]);
+        //       }
+        //     }
+        //  })
+        //  return bugsArray;
+        // )
+        .subscribe(responseData => { 
+            this.bugsObj = responseData;
+            console.log(responseData);
+        });   
   }
 
   onDisplayObj() {
