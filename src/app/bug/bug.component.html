@@ -1,11 +1,12 @@
-<p>BUG Page!!!</p>
+<p>BUG Page</p>
 
-<form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm.value)">
+<!-- <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm.value)"> -->
+<form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
     <div class="form-group mx-4">
         <input  type="text"
                 class="form-control"
                 placeholder="Title"
-                name="fname"
+                name="bugTitle"
                 ngModel
                 required/>
     </div>
@@ -13,26 +14,7 @@
         <input  type="text"
                 class="form-control"
                 placeholder="Description"
-                name="lname"
-                maxlength="256"
-                ngModel
-                required/>
-    </div>
-    <div class="form-group mx-4">
-        <input  type="text"
-                class="form-control"
-                placeholder="Email"
-                name="email"
-                maxlength="256"
-                ngModel
-                required
-                email/>
-    </div>
-    <div class="form-group mx-4">
-        <input  type="text"
-                class="form-control"
-                placeholder="Password"
-                name="password"
+                name="bugDescription"
                 maxlength="256"
                 ngModel
                 required/>

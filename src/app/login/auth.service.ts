@@ -6,21 +6,45 @@ import { Injectable } from "@angular/core";
 @Injectable({providedIn: 'root'})
 
 export class AuthService {
+    private registerUrl = 'http://localhost:3000/register';
+    private loginUrl    = 'http://localhost:3000/login';
 
     constructor(private http: HttpClient) { }
 
     onSignUp(email: string, password: string) {
-        return this.http.post('http://localhost:3000/register/', 
-                                { fname: 'superman',
-                                lname: 'kent',
+        return this.http.post(this.registerUrl, 
+                              { fName: 'Clark',
+                                lName: 'Kent',
                                 email: email,
                                 password: password,
-                                deleted_flag: '0' }); 
+                                deletedFlag: 0 }); 
             
     }
 
-    // onLogin(email: string, password: string) {
-    //     this.http.post('http://localhost:3000/register/');
+    onLogin(email: string, password: string) {
+        return this.http.post<any>(this.loginUrl,
+                              { email: email, password: password });
+    }
+
+    // registerUser(user) {
+    //     return this.http.post<any>(this.registerUrl, user);
     // }
+
+    // loginUser(user) {
+    //     // return this.http.post<any>(this.loginUrl, user);
+    // }
+    loginUser(email: string, password: string) {
+        return this.http.post<any>( this.loginUrl, 
+                                    { email: email, password: password });
+    }
+
+    loggedIn() {
+        //-- The !! will return true/false: will return true if token exists
+        return !!localStorage.getItem('token');
+    }
+
+    getToken() {
+        return localStorage.getItem('token');
+    }
 
 }
