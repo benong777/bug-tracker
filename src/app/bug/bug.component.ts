@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { findReadVarNames } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { NgForm } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { NodeWithI18n } from '@angular/compiler';
-
+import { AuthService } from '../login/auth.service';
+import { AuthGuardGuard } from '../auth-guard.guard';
 
 @Component({
   selector: 'app-bug',
@@ -22,12 +20,45 @@ export class BugComponent implements OnInit {
   error: string;
 
   constructor(  private http: HttpClient,
-                private router: Router )  { }
+                private router: Router,
+                private authService: AuthService )  { }
     
 
   ngOnInit(): void {
     //-- GET all bugs whenever this page/route loads
     this.getAllBugs();
+  }
+
+  onGetAllBugs() {
+    this.getAllBugs();
+  }
+
+  private getAllBugs() {
+    this.isLoading = true;
+    this.authService.getBugs()
+        .subscribe(
+            res => { 
+                // this.bugsObj = responseData;
+                console.log('Getting all bugs');
+                console.log(res);
+                this.isLoading = false;
+            },
+            err => {
+                console.log('Error getting bugs!');
+            }
+    );    
+    // this.http.get('http://localhost:3000/bug') 
+    //     .subscribe(
+    //         res => { 
+    //             // this.bugsObj = responseData;
+    //             console.log('Getting all bugs');
+    //             console.log(res);
+    //             this.isLoading = false;
+    //         },
+    //         err => {
+    //             console.log('Error getting bugs!');
+    //         }
+    // );    
   }
 
   //-- For ALL (GET/POST/PUT/DELETE/...), you need the subscribe to send the request
@@ -109,20 +140,6 @@ export class BugComponent implements OnInit {
       //     .subscribe(responseData => { 
       //         console.log(responseData);
       //     });
-  }
-
-  onGetAllBugs() {
-    this.getAllBugs();
-  }
-
-  private getAllBugs() {
-    // this.isLoading = true;
-    // this.http.get('http://localhost:3000/users/') 
-    //     .subscribe(responseData => { 
-    //         this.bugsObj = responseData;
-    //         console.log(responseData);
-    //         this.isLoading = false;
-    //     });    
   }
 
   onGetAllArray() {

@@ -8,6 +8,9 @@ import { Injectable } from "@angular/core";
 export class AuthService {
     private registerUrl = 'http://localhost:3000/register';
     private loginUrl    = 'http://localhost:3000/login';
+    private bugUrl   = 'http://localhost:3000/bug';
+    private commentUrl   = 'http://localhost:3000/comment';
+
 
     constructor(private http: HttpClient) { }
 
@@ -45,6 +48,10 @@ export class AuthService {
 
     getToken() {
         return localStorage.getItem('token');
+    }
+
+    getBugs() {
+        return this.http.get<any>( this.bugUrl);
     }
 
 }
