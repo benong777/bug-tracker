@@ -1,5 +1,15 @@
 <p>BUG Page</p>
 
+<div *ngFor="let bug of bugArray; let i = index">
+    <p>{{ bug['idProject'] }}</p>
+    <p>{{ bug['bugTitle'] }}</p>
+    <p>{{ bug['bugDescription'] }}</p>
+    <p>{{ bug['assignedTo'] }}</p>
+    <p>{{ bug['bugDate'] }}</p>
+</div>
+<button class="btn btn-primary"
+        (click)="onDisplay()"></button>
+
 <!-- <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm.value)"> -->
 <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
     <div class="form-group mx-4">

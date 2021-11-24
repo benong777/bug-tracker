@@ -14,8 +14,8 @@ import { AuthGuardGuard } from '../auth-guard.guard';
 
 
 export class BugComponent implements OnInit {
-  bugsObj: {} = {};
-  testArray: [] = [];
+  bugObj: {} = {};
+  bugArray: [] = [];
   isLoading = false;
   error: string;
 
@@ -29,6 +29,14 @@ export class BugComponent implements OnInit {
     this.getAllBugs();
   }
 
+  onDisplay() {
+    for (let i=0; i<this.bugArray.length; i++) {
+      let obj = this.bugArray[i];
+      console.log('Array[' + i + ']: ', this.bugArray[i]);
+    }
+    
+  }
+
   onGetAllBugs() {
     this.getAllBugs();
   }
@@ -38,9 +46,9 @@ export class BugComponent implements OnInit {
     this.authService.getBugs()
         .subscribe(
             res => { 
-                // this.bugsObj = responseData;
+                this.bugArray = res.data;
                 console.log('Getting all bugs');
-                console.log(res);
+                console.log(this.bugArray);
                 this.isLoading = false;
             },
             err => {
@@ -161,7 +169,7 @@ export class BugComponent implements OnInit {
   }
 
   onDisplayObj() {
-    console.log(this.bugsObj);
+    console.log(this.bugObj);
   }
 
   onDeleteBug(id: string) {
