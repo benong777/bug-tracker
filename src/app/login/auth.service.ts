@@ -1,9 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
 
 //-- Can add the 'providers' in the app.module.ts instead of here
-@Injectable({providedIn: 'root'})
+// @Injectable({providedIn: 'root'})
+@Injectable()
+
 
 export class AuthService {
     private registerUrl = 'http://localhost:3000/register';
@@ -11,8 +14,10 @@ export class AuthService {
     private bugUrl   = 'http://localhost:3000/bug';
     private commentUrl   = 'http://localhost:3000/comment';
 
+    isLoggedIn = false;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,
+                private router: Router) { }
 
     onSignUp(email: string, password: string) {
         return this.http.post(this.registerUrl, 
@@ -54,4 +59,9 @@ export class AuthService {
         return this.http.get<any>( this.bugUrl);
     }
 
+    logout() {
+        return localStorage.removeItem('token');
+        // this.isLoggedIn = false;
+        this.router.navigate(['/home']);
+    }
 }

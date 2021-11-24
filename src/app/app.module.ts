@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -27,14 +28,14 @@ const appRoutes: Routes = [
     },
 //  { path: 'home',             component: HomeComponent   },
 //  { path: 'users',            component: UsersComponent  },
-    { path: 'users',
+    { path: 'user',
       component: UsersComponent,
       canActivate: [AuthGuardGuard] 
     },
-    { path: 'users/:id/:name',  component: UserComponent   },
+    { path: 'user/:id/:name',   component: UserComponent   },
     { path: 'login',            component: LoginComponent  },
     { path: 'signup',           component: SignupComponent },
-    // { path: 'bug',              component: BugComponent    },
+//  { path: 'bug',              component: BugComponent    },
     { path: 'bug',
       component: BugComponent,
       canActivate: [AuthGuardGuard] 
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
     LoadingSpinnerComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),

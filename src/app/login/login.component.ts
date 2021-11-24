@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
               console.log('TOKEN: ', tokenStr[3]);
               localStorage.setItem('token', tokenStr[3]);
               this.isLoading = false;
+              this.authService.isLoggedIn = true;
               this.router.navigate(['/bug']);
             },
             err => {

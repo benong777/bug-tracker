@@ -1,6 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">BugTracker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/bug" routerLinkActive="active">Bugs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/user" routerLinkActive="active">Users</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+          <a class="nav-link"   *ngIf="!isLoggedIn()" 
+                                routerLink="/login" 
+                                routerLinkActive="active">Login</a>
+
+          <a class="nav-link"   *ngIf="!isLoggedIn()" 
+                                routerLink="/register" 
+                                routerLinkActive="active">Register</a>
+
+          <a class="nav-link"   *ngIf="isLoggedIn()" 
+                                style="cursor:pointer" 
+                                (click)="onLogout()">Logout</a>
+      </ul>
+    </div>
+  </nav>    
+  <div class="container">
+    <router-outlet></router-outlet>            
+  </div>
+
+
+
 <div class="container-fluid">
     <div class="row bg-primary">
-        <div class="col-sm-5">
+        <div class="col-sm-4">
             <a class="header-link" routerLink="/">Bug Tracker</a>
         </div>
         <div class="col-sm-1">
@@ -9,20 +45,24 @@
         <!-- <div class="col-sm-2">
           <a class="header-link" [routerLink]="['/users', 'num?']">Users</a>
         </div> -->
-        <div class="col-sm-2">
-            <a class="header-link" routerLink="/login">Log In</a>
+        <div *ngIf="!isLoggedIn" class="col-sm-2">
+            <a class="header-link" routerLink="/login">Log In: {{isLoggedIn}}</a>
         </div>
-        <div class="col-sm-4">
-            <a class="header-link" routerLink="/signup">Create Account</a>
+        <div *ngIf="!isLoggedIn" class="col-sm-3">
+            <a class="header-link" routerLink="/signup">Create Account: {{isLoggedIn}}</a>
         </div>
+        <!-- <button *ngIf="isLoggedIn" 
+                class="btn btn-sm btn-success"
+                (click)="onLogout()">Logout: {{isLoggedIn}}
+        </button> -->
     </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-sm-12">
       <router-outlet></router-outlet>
   </div>
-</div>
+</div> -->
 
 <!-- <div class="row">
     <div class="col-sm-12">
