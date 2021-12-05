@@ -1,67 +1,144 @@
-<p>BUG Page</p>
-
-<div *ngFor="let bug of bugArray; let i = index">
-    <p>{{ bug['idProject'] }}</p>
-    <p>{{ bug['bugTitle'] }}</p>
-    <p>{{ bug['bugDescription'] }}</p>
-    <p>{{ bug['assignedTo'] }}</p>
-    <p>{{ bug['bugDate'] }}</p>
-</div>
-<button class="btn btn-primary"
-        (click)="onDisplay()"></button>
-
-<!-- <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm.value)"> -->
-<form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
-    <div class="form-group mx-4">
-        <input  type="text"
-                class="form-control"
-                placeholder="Title"
-                name="bugTitle"
-                ngModel
-                required/>
+<!-- <form> -->
+    <!-- Added d-inline so that button menus can be on the same line -->
+    <div class="dropdown d-inline">
+        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{selectedProject}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a  *ngFor="let projectName of projectNames; let i=index" 
+                (click)="onSelectProject(projectName)"
+                class="dropdown-item">{{projectName}}</a>
+        </div>
     </div>
-    <div class="form-group mx-4">
+
+    <div class="dropdown d-inline">
+        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{selectedBug}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a  *ngFor="let projectBugName of projectBugNames; let i=index" 
+                (click)="onSelectBug(projectBugName)"
+                class="dropdown-item">{{projectBugName}}</a>
+        </div>
+    </div>
+<!-- </form> -->
+<form #commentForm="ngForm" (ngSubmit)="onSubmitComment(commentForm)">
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Example textarea</label>
+        <textarea   class="form-control" 
+                    id="exampleFormControlTextarea1" 
+                    rows="3"
+                    name="notes"
+                    maxlength="256"
+                    ngModel
+                    required></textarea>
+      </div>
+    <!-- <div class="form-group mx-4">
         <input  type="text"
                 class="form-control"
-                placeholder="Description"
-                name="bugDescription"
+                placeholder="Comments"
+                name="notes"
                 maxlength="256"
                 ngModel
                 required/>
-    </div>
-
-    <!-- POST / register new user -->
+    </div> -->
     <div class="d-flex justify-content-center mt-4">
         <!-- Type = "submit" will submit the form
              Type = "button" to ensure pushing it will not submit this form. -->
         <button class="btn btn-sm btn-primary mr-4" 
                 type="submit" 
-                [disabled]="!bugForm.valid">
-            Submit
+                [disabled]="!commentForm.valid">Add Comments
         </button>
     </div>
 </form>
 
-<input  type="number" #bugNum  placeholder="Bug ID"/>
 
-<!-- DELETE -->
-<button class="btn btn-sm btn-warning" (click)='onDeleteBug(bugNum.value)'>Delete</button>
-
-<!-- GET -->
-<button class="btn btn-sm btn-success" (click)="onGetBug(bugNum.value)">GET</button>
-<!-- GET ALL -->
-<button class="btn btn-sm btn-primary" (click)="onGetAllBugs()">GET-ALL</button>
-
-<!-- GET ALL (ARRAY)-->
-<button class="btn btn-success" (click)="onGetAllArray()">GET-ALL-ARRAY</button>
-
-<!-- PUT / update user -->
-<button class="btn btn-sm btn-primary" (click)="onUpdateBug(bugNum.value, bugForm.value)">Update</button>
-
-<!-- Display bugsObj -->
-<button class="btn btn-primary" (click)="onDisplayObj()">Display</button>
-
-
+<!-- Loading Spinner-->
 <div class="row">
     <p *ngIf="isLoading">LOADING...</p>
 </div>
+
+
+<div *ngFor="let bug of bugArray; let i = index">
+    <p>Project: {{ bug['projectName'] }}</p>
+    <p>User: {{ bug['idUser'] }}</p>
+    <p>Bug: {{ bug['bugTitle'] }}</p>
+    <p>Description: {{ bug['bugDescription'] }}</p>
+    <p>Assigned to: {{ bug['assignedTo'] }}</p>
+    <p>Date: {{ bug['bugDate'] }}</p>
+</div>
+
+
+<!-- <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm.value)"> -->
+    <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
+        <div class="form-group mx-4">
+            <input  type="text"
+                    class="form-control"
+                    placeholder="Project"
+                    name="projectName"
+                    ngModel
+                    required/>
+        </div>
+        <div class="form-group mx-4">
+            <input  type="text"
+                    class="form-control"
+                    placeholder="Title"
+                    name="bugTitle"
+                    ngModel
+                    required/>
+        </div>
+        <div class="form-group mx-4">
+            <input  type="text"
+                    class="form-control"
+                    placeholder="Description"
+                    name="bugDescription"
+                    maxlength="256"
+                    ngModel
+                    required/>
+        </div>
+        <div class="form-group mx-4">
+            <input  type="text"
+                    class="form-control"
+                    placeholder="Assigned to"
+                    name="assignedTo"
+                    ngModel
+                    required/>
+        </div>
+        <div class="form-group mx-4">
+            <input  type="text"
+                    class="form-control"
+                    placeholder="Date"
+                    name="date"
+                    ngModel
+                    required/>
+        </div>
+    
+        <div class="d-flex justify-content-center mt-4">
+            <!-- Type = "submit" will submit the form
+                 Type = "button" to ensure pushing it will not submit this form. -->
+            <button class="btn btn-sm btn-primary mr-4" 
+                    type="submit" 
+                    [disabled]="!bugForm.valid">Add Bug
+            </button>
+        </div>
+    </form>
+    
+
+
+<!-- DELETE -->
+<!-- <button class="btn btn-sm btn-warning" (click)='onDeleteBug(bugNum.value)'>Delete</button> -->
+
+<!-- GET -->
+<!-- <button class="btn btn-sm btn-success" (click)="onGetBug(bugNum.value)">GET</button> -->
+<!-- GET ALL -->
+<!-- <button class="btn btn-sm btn-primary" (click)="onGetAllBugs()">GET-ALL</button> -->
+
+<!-- GET ALL (ARRAY)-->
+<!-- <button class="btn btn-success" (click)="onGetAllArray()">GET-ALL-ARRAY</button> -->
+
+<!-- PUT / update user -->
+<!-- <button class="btn btn-sm btn-primary" (click)="onUpdateBug(bugNum.value, bugForm.value)">Update</button> -->
+
+<!-- Display bugsObj -->
+<!-- <button class="btn btn-primary" (click)="onDisplayObj()">Display</button> -->
+

@@ -15,9 +15,24 @@ import { AuthGuardGuard } from '../auth-guard.guard';
 
 export class BugComponent implements OnInit {
   bugObj: {} = {};
+  projects: {} = {};
   bugArray: [] = [];
+
+  projectArr: [] = [];
+  projectNames: string [] = [];
+  projectIds: number [] = [];
+
+  projectBugNames: [] = [];
+
+  bugNames: string[] = [];
+  bugIds: number[] = [];
+
   isLoading = false;
   error: string;
+  selectedProject: string = 'Select Project';
+  selectedIdProject: number = 0;
+
+  selectedBug: string = 'Select Bug';
 
   constructor(  private http: HttpClient,
                 private router: Router,
@@ -27,14 +42,65 @@ export class BugComponent implements OnInit {
   ngOnInit(): void {
     //-- GET all bugs whenever this page/route loads
     this.getAllBugs();
+    this.getAllProjects();
+    // this.onSelectProject('TE');
   }
 
-  onDisplay() {
-    for (let i=0; i<this.bugArray.length; i++) {
-      let obj = this.bugArray[i];
-      console.log('Array[' + i + ']: ', this.bugArray[i]);
+  onSelectProject(projectName: string) {
+    console.log('Project selected: ', projectName);
+    console.log('projectArr', this.projectArr);
+    this.selectedProject = 'Project: ' + projectName;
+    console.log('Selected project: ', this.selectedProject);
+
+    //-- Get Project ID
+    for (let i=0; i<this.projectArr.length; i++) {
+        console.log('Project name: ', this.projectArr[i]['projectName']);
+        if (this.projectArr[i]['projectName'] === projectName) {
+            console.log('Match found');
+             this.selectedIdProject = this.projectArr[i]['idProject'];
+             break;
+        }
     }
-    
+    console.log('Selected idProject: ', this.selectedIdProject);
+    //-- Grab all bugs for selected project
+    this.getProjectBugs(projectName);
+  }
+
+  getProjectBugs(projectName: string) {
+    // console.log('Beginning bug array: ', this.bugArray);
+    this.projectBugNames = [];
+    this.bugArray.forEach(element => {
+        if (element['projectName'] === projectName) {
+          // console.log(element['projectName'], element['bugTitle']);
+          this.projectBugNames.push(element['bugTitle']);
+        }
+    });
+    console.log('Final projectBugNames: ', this.projectBugNames);
+  }
+
+  onSelectBug(bugName: string) {
+      this.selectedBug = 'Bug: ' + bugName;
+  }
+
+  private getAllProjects() {
+    this.isLoading = true;
+    this.projects = this.authService.getProject()
+                        .subscribe(
+                            res => { 
+                                console.log('Got all projects');
+                                // Grab all objects' project names and put into an array
+                                console.log('res.data: ', res.data);
+                                this.projectArr = res.data;
+                                this.projectNames = this.projectArr.map( projectObj => {
+                                    return projectObj['projectName'];
+                                });
+                                console.log('projectNames:', this.projectNames);
+                                this.isLoading = false;
+                            },
+                            err => {
+                                console.log('Error getting projects!');
+                                this.isLoading = false;
+                            });
   }
 
   onGetAllBugs() {
@@ -53,21 +119,30 @@ export class BugComponent implements OnInit {
             },
             err => {
                 console.log('Error getting bugs!');
+                this.isLoading = false;
             }
     );    
-    // this.http.get('http://localhost:3000/bug') 
-    //     .subscribe(
-    //         res => { 
-    //             // this.bugsObj = responseData;
-    //             console.log('Getting all bugs');
-    //             console.log(res);
-    //             this.isLoading = false;
-    //         },
-    //         err => {
-    //             console.log('Error getting bugs!');
-    //         }
-    // );    
   }
+
+  onSubmitComment(formComment: NgForm) {
+      this.isLoading = true;
+      console.log(formComment.value);
+      const idProject = formComment.value.idProject;
+      const idBug = formComment.value.idBug;
+      const notes = formComment.value.notes;
+
+      this.authService.submitComment(idProject, idBug, notes)
+          .subscribe(
+              res => {
+                  console.log("Success! Comment added");
+                  this.isLoading = false;
+              },
+              err => {
+                  console.log(err);
+                  this.isLoading = false;
+              });
+  }
+
 
   //-- For ALL (GET/POST/PUT/DELETE/...), you need the subscribe to send the request
   submitBug(title: string, description: string) {
@@ -149,6 +224,9 @@ export class BugComponent implements OnInit {
       //         console.log(responseData);
       //     });
   }
+
+
+  
 
   onGetAllArray() {
     // this.http.get('http://localhost:3000/users/') 

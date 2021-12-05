@@ -13,6 +13,8 @@ import { SignupComponent } from './signup/signup.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
 import { BugComponent } from './bug/bug.component';
+import { ProfileComponent } from './profile/profile.component';
+
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
@@ -28,10 +30,10 @@ const appRoutes: Routes = [
     },
 //  { path: 'home',             component: HomeComponent   },
 //  { path: 'users',            component: UsersComponent  },
-    { path: 'user',
-      component: UsersComponent,
-      canActivate: [AuthGuardGuard] 
-    },
+    { path: 'user',             component: UsersComponent,
+                                canActivate: [AuthGuardGuard] },
+    { path: 'profile',          component: ProfileComponent,
+                                canActivate: [AuthGuardGuard] },
     { path: 'user/:id/:name',   component: UserComponent   },
     { path: 'login',            component: LoginComponent  },
     { path: 'signup',           component: SignupComponent },
@@ -52,7 +54,9 @@ const appRoutes: Routes = [
     UsersComponent,
     UserComponent,
     BugComponent,
-    LoadingSpinnerComponent
+    ProfileComponent,
+    LoadingSpinnerComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

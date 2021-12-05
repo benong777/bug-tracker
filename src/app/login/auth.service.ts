@@ -11,8 +11,9 @@ import { Router } from "@angular/router";
 export class AuthService {
     private registerUrl = 'http://localhost:3000/register';
     private loginUrl    = 'http://localhost:3000/login';
-    private bugUrl   = 'http://localhost:3000/bug';
-    private commentUrl   = 'http://localhost:3000/comment';
+    private projectUrl  = 'http://localhost:3000/project';
+    private bugUrl      = 'http://localhost:3000/bug';
+    private commentUrl  = 'http://localhost:3000/comment';
 
     isLoggedIn = false;
 
@@ -46,8 +47,23 @@ export class AuthService {
                                     { email: email, password: password });
     }
 
+    submitComment(idProject: number, idBug: number, notes: string) {
+        console.log("Comment submitted!",   'idProj: ', idProject,
+                                            'idBug: ', idBug,
+                                            'notes: ', notes);
+        const token = this.getToken();
+        console.log(token);
+
+        return this.http.post(  this.commentUrl, 
+                                {   idProject: idProject, 
+                                    idBug: idBug, 
+                                    notes: notes });
+        console.log("Submit completed!");
+    }
+
+
     loggedIn() {
-        //-- The !! will return true/false: will return true if token exists
+        //-- The !! will return true/false (true if token exists)
         return !!localStorage.getItem('token');
     }
 
@@ -55,8 +71,16 @@ export class AuthService {
         return localStorage.getItem('token');
     }
 
+    getProject() {
+        return this.http.get<any>(this.projectUrl);
+    }
+
     getBugs() {
-        return this.http.get<any>( this.bugUrl);
+        return this.http.get<any>(this.bugUrl);
+    }
+
+    submitBug() {
+        
     }
 
     logout() {

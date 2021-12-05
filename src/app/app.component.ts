@@ -1,3 +1,8 @@
+//-- Q's
+//-- When getting all bugs vs getting the bugs for a particular user..
+//-- Do you handle it all in the backend or do you grab all the data
+//-- and then select the data you're interested in the frontend?
+
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './login/auth.service';
 
