@@ -21,6 +21,7 @@ import { Token } from '@angular/compiler/src/ml_parser/lexer';
 import { AuthService } from './login/auth.service';
 import { AuthGuardGuard } from './auth-guard.guard';
 
+
 const appRoutes: Routes = [
     // { path: '', component: HomeComponent },
     // If no path provided, redirect to /home

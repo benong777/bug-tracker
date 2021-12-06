@@ -1,3 +1,22 @@
-.header-link {
+
+/* .header-link {
      color: white;
+} */
+
+.navbar {
+     background-color: var(--app-bg-color);
 }
+
+.options-list {
+     font-size: 1.15em;
+     line-height: 2.2rem;
+     margin-top: 30px;
+     margin-bottom: 40px;
+ }
+
+.side-menu {
+     color: white;
+     background-color: var(--app-bg-color, black);
+     padding-left: 22px;
+     padding-right: 36px;
+ }
