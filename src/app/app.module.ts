@@ -20,30 +20,30 @@ import { TokenInterceptorService } from './token-interceptor.service';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
 import { AuthService } from './login/auth.service';
 import { AuthGuardGuard } from './auth-guard.guard';
+import { ProjectComponent } from './project/project.component';
 
 
 const appRoutes: Routes = [
     // { path: '', component: HomeComponent },
     // If no path provided, redirect to /home
-    { path: '', 
-      redirectTo: '/bug', 
-      pathMatch: 'full',
-    },
+    { path: '',   redirectTo: '/bug', 
+                  pathMatch: 'full', },
 //  { path: 'home',             component: HomeComponent   },
-//  { path: 'users',            component: UsersComponent  },
     { path: 'user',             component: UsersComponent,
+                                canActivate: [AuthGuardGuard] },
+    { path: 'user/:id/:name',   component: UserComponent,   
                                 canActivate: [AuthGuardGuard] },
     { path: 'profile',          component: ProfileComponent,
                                 canActivate: [AuthGuardGuard] },
-    { path: 'user/:id/:name',   component: UserComponent   },
+    { path: 'project',          component: ProjectComponent,
+                                canActivate: [AuthGuardGuard] },
+    { path: 'bug',              component: BugComponent,
+                                canActivate: [AuthGuardGuard] },
+    { path: 'bug/:id',          component: BugComponent,    
+                                canActivate: [AuthGuardGuard] },
+
     { path: 'login',            component: LoginComponent  },
     { path: 'signup',           component: SignupComponent },
-//  { path: 'bug',              component: BugComponent    },
-    { path: 'bug',
-      component: BugComponent,
-      canActivate: [AuthGuardGuard] 
-    },
-    { path: 'bug/:id',          component: BugComponent    }
 ];
 
 @NgModule({
@@ -57,7 +57,8 @@ const appRoutes: Routes = [
     BugComponent,
     ProfileComponent,
     LoadingSpinnerComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProjectComponent
   ],
   imports: [
     CommonModule,

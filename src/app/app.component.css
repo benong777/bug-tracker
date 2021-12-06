@@ -3,8 +3,12 @@
      color: white;
 } */
 
+.page-content {
+     background-color: var(--content-bg-color, green);
+}
+
 .navbar {
-     background-color: var(--app-bg-color);
+     background-color: var(--menu-bg-color);
 }
 
 .options-list {
@@ -16,7 +20,7 @@
 
 .side-menu {
      color: white;
-     background-color: var(--app-bg-color, black);
+     background-color: var(--menu-bg-color, black);
      padding-left: 22px;
      padding-right: 36px;
  }

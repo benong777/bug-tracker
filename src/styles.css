@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-    --app-bg-color: rgb(51, 50, 50);
+    --menu-bg-color: rgb(51, 50, 50);
+    --content-bg-color: rgb(226, 223, 223);
 }
 
 html, body {
