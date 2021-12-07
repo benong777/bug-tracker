@@ -1,0 +1,11 @@
+.header {
+    background-color: var(--header-bg-color);
+}
+
+/* .prj-delete-btn {
+    float: left;
+} */
+
+.delete-btn {
+    background-color: var(--content-bg-color);
+}

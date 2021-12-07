@@ -134,7 +134,7 @@ export class BugComponent implements OnInit {
       this.authService.submitComment(idProject, idBug, notes)
           .subscribe(
               res => {
-                  console.log("Success! Comment added");
+                  console.log("Front-end - Success! Comment added");
                   this.isLoading = false;
               },
               err => {

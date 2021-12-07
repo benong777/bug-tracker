@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
-
 //-- Can add the 'providers' in the app.module.ts instead of here
 // @Injectable({providedIn: 'root'})
 @Injectable()
@@ -84,8 +83,8 @@ export class AuthService {
     }
 
     logout() {
+        this.router.navigate(['']);
+        this.isLoggedIn = false;
         return localStorage.removeItem('token');
-        // this.isLoggedIn = false;
-        this.router.navigate(['/home']);
     }
 }

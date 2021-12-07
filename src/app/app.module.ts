@@ -14,13 +14,13 @@ import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
 import { BugComponent } from './bug/bug.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProjectComponent } from './project/project.component';
 
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { TokenInterceptorService } from './token-interceptor.service';
-import { Token } from '@angular/compiler/src/ml_parser/lexer';
+import { ApiService } from './services/api.service'
 import { AuthService } from './login/auth.service';
 import { AuthGuardGuard } from './auth-guard.guard';
-import { ProjectComponent } from './project/project.component';
 
 
 const appRoutes: Routes = [
@@ -69,6 +69,7 @@ const appRoutes: Routes = [
     HttpClientModule
   ],
   providers: [ AuthService,
+               ApiService,
                AuthGuardGuard, 
                {
                   provide: HTTP_INTERCEPTORS,

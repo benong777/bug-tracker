@@ -2,6 +2,7 @@
 :root {
     --menu-bg-color: rgb(51, 50, 50);
     --content-bg-color: rgb(226, 223, 223);
+    --header-bg-color: rgb(190, 187, 187);
 }
 
 html, body {
