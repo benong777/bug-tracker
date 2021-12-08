@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -8,20 +9,21 @@ import { ApiService } from '../services/api.service';
 })
 export class ProjectComponent implements OnInit {
 
-  projects: {} = {};
+  newProjectName: string = '';
   projectsArr: [] = [];
+  isAddingProjectMode = false;
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-      this.onGetProjects();
+      this.getProjects();
   }
 
-  onGetProjects() {
-    this.projects = this.apiService.getProject()
+  getProjects() {
+    this.apiService.getProject()
         .subscribe(
             res => {
-                console.log('Pojects received: ', res.data);
+                console.log('Projects received: ', res.data);
                 this.projectsArr = res.data;
                 console.log('ProjectsArr: ', this.projectsArr);
             },
@@ -29,7 +31,6 @@ export class ProjectComponent implements OnInit {
                 console.log('Get projects ERROR: ', err);
             }
         );
-    console.log('Projects {}: ', this.projects);
   }
 
   onDeleteProject(idProject: number) {
@@ -38,11 +39,35 @@ export class ProjectComponent implements OnInit {
           .subscribe(
               res => {
                   console.log('Frontend: Project deleted!');
-                  this.onGetProjects(); // Update page
+                  this.getProjects(); // Update page
               },
               err => {
                   console.log('Frontend: Error deleting project');
               }
           );
+  }
+
+  onAddProjectMode() {
+    this.isAddingProjectMode = true;
+    console.log("isAddingProjectMode: ", this.isAddingProjectMode);
+  }
+
+  onSubmitProject(form: NgForm) {
+    this.newProjectName = form.value.projectName;
+    console.log('projectName: ', this.newProjectName);
+    this.apiService.addProject(this.newProjectName)
+        .subscribe(res => {
+            console.log("Frontend - added new project: ", this.newProjectName);
+            this.getProjects();
+            this.newProjectName = '';   // reset name
+        },
+        err => {
+            console.log("Frontend: ERROR adding new project. ", err);
+        });
+    this.isAddingProjectMode = false;
+  }
+
+  onCancelProjectAdd() {
+    this.isAddingProjectMode = false;
   }
 }

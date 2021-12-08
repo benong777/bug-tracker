@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/auth.service';
-import { AuthGuardGuard } from '../auth-guard.guard';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-bug',
@@ -14,6 +13,16 @@ import { AuthGuardGuard } from '../auth-guard.guard';
 
 
 export class BugComponent implements OnInit {
+
+  isLoading: boolean = false;
+  isAddingBugMode: boolean = false;
+  bugsArr: [] = [];
+  newBugTitle: string = '';
+  newProjectName: string = '';
+  newAssignedTo: string = '';
+
+
+
   bugObj: {} = {};
   projects: {} = {};
   bugArray: [] = [];
@@ -27,7 +36,6 @@ export class BugComponent implements OnInit {
   bugNames: string[] = [];
   bugIds: number[] = [];
 
-  isLoading = false;
   error: string;
   selectedProject: string = 'Select Project';
   selectedIdProject: number = 0;
@@ -36,15 +44,100 @@ export class BugComponent implements OnInit {
 
   constructor(  private http: HttpClient,
                 private router: Router,
+                private apiService: ApiService,
                 private authService: AuthService )  { }
     
 
   ngOnInit(): void {
     //-- GET all bugs whenever this page/route loads
     this.getAllBugs();
-    this.getAllProjects();
+    // this.getAllProjects();
     // this.onSelectProject('TE');
   }
+
+  getAllBugs() {
+    this.isLoading = true;
+    this.authService.getBugs()
+        .subscribe(
+            res => { 
+                this.bugsArr = res.data;
+                console.log('Getting all bugs');
+                console.log(this.bugsArr);
+                this.isLoading = false;
+            },
+            err => {
+                console.log('Error getting bugs!');
+                this.isLoading = false;
+            }
+    );    
+  }
+
+  onAddBugMode() {
+      this.isAddingBugMode = true;
+  }
+
+  onCancelAddBug() {
+    this.isAddingBugMode = false;
+  }
+
+  onSubmitBug(form: NgForm) {
+    if (!form.valid) {
+      console.log("Submitted form is not valid"); // for debugging
+      return;
+    }
+    this.newProjectName = form.value.projectName;
+    this.newBugTitle = form.value.bugTitle;
+    this.newAssignedTo = form.value.assignedTo;
+
+    console.log('projectName: ', this.newProjectName);
+    console.log('bugName: ', this.newBugTitle);
+    console.log('assignedTo: ', this.newAssignedTo);
+    this.apiService.addBug(this.newProjectName, this.newBugTitle, this.newAssignedTo)
+        .subscribe(res => {
+            console.log("Frontend - added new bug: ", this.newBugTitle);
+            this.getAllBugs();
+            this.newBugTitle = '';   // reset name
+            this.newProjectName = '';
+            this.newAssignedTo = '';
+        },
+        err => {
+            console.log("Frontend: ERROR adding new bug. ", err);
+        });
+    this.isAddingBugMode = false;
+
+
+
+    // console.log(form.value);
+    // const title = form.value.bugTitle;
+    // const description = form.value.bugDescription;
+
+    // this.submitBug(title, description)
+    //     .subscribe(
+    //         res => {
+    //             console.log("Login successful!");
+    //             console.log(res);
+    //         }, 
+    //         error => {
+    //             console.log(error);
+    //             this.error = 'Error submitting bug!';
+    //             this.isLoading = false;
+    //         }
+    // );
+  }
+
+  
+  onDeleteBug(idBug: number) {
+    this.apiService.deleteBug(idBug)
+        .subscribe(res => {
+            console.log('idBug deleted: ', idBug);
+            this.getAllBugs();
+        },
+        err => {
+            console.log('ERROR deleting idBug: ', idBug);
+        });
+  }
+
+
 
   onSelectProject(projectName: string) {
     console.log('Project selected: ', projectName);
@@ -103,26 +196,26 @@ export class BugComponent implements OnInit {
                             });
   }
 
-  onGetAllBugs() {
-    this.getAllBugs();
-  }
+  // onGetAllBugs() {
+  //   this.getAllBugs();
+  // }
 
-  private getAllBugs() {
-    this.isLoading = true;
-    this.authService.getBugs()
-        .subscribe(
-            res => { 
-                this.bugArray = res.data;
-                console.log('Getting all bugs');
-                console.log(this.bugArray);
-                this.isLoading = false;
-            },
-            err => {
-                console.log('Error getting bugs!');
-                this.isLoading = false;
-            }
-    );    
-  }
+  // private getAllBugs() {
+  //   this.isLoading = true;
+  //   this.authService.getBugs()
+  //       .subscribe(
+  //           res => { 
+  //               this.bugArray = res.data;
+  //               console.log('Getting all bugs');
+  //               console.log(this.bugArray);
+  //               this.isLoading = false;
+  //           },
+  //           err => {
+  //               console.log('Error getting bugs!');
+  //               this.isLoading = false;
+  //           }
+  //   );    
+  // }
 
   onSubmitComment(formComment: NgForm) {
       this.isLoading = true;
@@ -165,43 +258,43 @@ export class BugComponent implements OnInit {
                                 return loginData;
   }
 
-  onSubmitBug(form: NgForm) {
-    if (!form.valid) {
-      console.log("Submitted form is not valid"); // for debugging
-      return;
-    }
-    console.log(form.value);
-    const title = form.value.bugTitle;
-    const description = form.value.bugDescription;
+  // onSubmitBug(form: NgForm) {
+  //   if (!form.valid) {
+  //     console.log("Submitted form is not valid"); // for debugging
+  //     return;
+  //   }
+  //   console.log(form.value);
+  //   const title = form.value.bugTitle;
+  //   const description = form.value.bugDescription;
 
-    this.submitBug(title, description)
-        .subscribe(
-            res => {
-                console.log("Login successful!");
-                console.log(res);
-                //-- Get the token string for the localStorage
-                // const tokenStr = JSON.stringify(res).split('"');
-                // localStorage.setItem('token', tokenStr[3]);
-                // this.isLoading = false;
-                // this.router.navigate(['/user']);
-            }, 
-            error => {
-                console.log(error);
-                this.error = 'Error submitting bug!';
-                this.isLoading = false;
-            }
-    );
+  //   this.submitBug(title, description)
+  //       .subscribe(
+  //           res => {
+  //               console.log("Login successful!");
+  //               console.log(res);
+  //               //-- Get the token string for the localStorage
+  //               // const tokenStr = JSON.stringify(res).split('"');
+  //               // localStorage.setItem('token', tokenStr[3]);
+  //               // this.isLoading = false;
+  //               // this.router.navigate(['/user']);
+  //           }, 
+  //           error => {
+  //               console.log(error);
+  //               this.error = 'Error submitting bug!';
+  //               this.isLoading = false;
+  //           }
+  //   );
                           
-    // this.http.post('http://localhost:3000/bug/', 
-    //       { idUser: 4,
-    //         idProject: 1,
-    //         bugTitle: title,
-    //         bugDescription: description,
-    //         deleted_flag: '0' }) 
-    //   .subscribe(responseData => { 
-    //       console.log(responseData);
-    //   });
-  }
+  //   // this.http.post('http://localhost:3000/bug/', 
+  //   //       { idUser: 4,
+  //   //         idProject: 1,
+  //   //         bugTitle: title,
+  //   //         bugDescription: description,
+  //   //         deleted_flag: '0' }) 
+  //   //   .subscribe(responseData => { 
+  //   //       console.log(responseData);
+  //   //   });
+  // }
 
   onUpdateBug(id: string, bugData: {  fname: string,
                                       lname: string, 
@@ -250,11 +343,11 @@ export class BugComponent implements OnInit {
     console.log(this.bugObj);
   }
 
-  onDeleteBug(id: string) {
-      // this.http.delete('http://localhost:3000/users/' + id )
-      //     .subscribe(responseData => {
-      //         console.log(responseData);
-      //     });
-      console.log('Bug deleted');
-  }
+  // onDeleteBug(id: string) {
+  //     // this.http.delete('http://localhost:3000/users/' + id )
+  //     //     .subscribe(responseData => {
+  //     //         console.log(responseData);
+  //     //     });
+  //     console.log('Bug deleted');
+  // }
 }

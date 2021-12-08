@@ -1,23 +1,69 @@
 <div class="container">
-    <div class="row header mx-3 mt-4 mb-3 py-1 align-items-center">
+    <div class="row content-header mx-3 mt-4 mb-3 py-1 align-items-center">
         <div class="col-md-1">ID</div>
         <div class="col-md-7">Project</div>
         <div class="col-md-4">
-            <button class="btn-sm float-right mr-2">Add Project</button>
+            <button *ngIf="!isAddingProjectMode"
+                    (click)="onAddProjectMode()"
+                    class="btn-sm float-right mr-2">Add Project</button>
         </div>
     </div>
+    
+    <div *ngIf="isAddingProjectMode">
+        <form #projectForm="ngForm" (ngSubmit)="onSubmitProject(projectForm)">
+            <div class="row my-5 ml-4">
+                <div class="col-md-6 d-flex align-items-center px-5">
+                    <input  type="text"
+                            class="form-control"
+                            placeholder="Project name"
+                            name="projectName"
+                            ngModel
+                            required/>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <button class="btn-sm mr-3" type="submit" 
+                            [disabled]="!projectForm.valid">Add
+                    </button>
+                    <button class="btn-sm"
+                            (click)="onCancelProjectAdd()">Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- <div *ngIf="isAddingProjectMode" 
+         class="row my-3 border border-primary">
+         <div class="col-md-6">
+            <input  *ngIf="isAddingProjectMode"
+                    type="text"
+                    class="form-control"
+                    placeholder="Project name"
+                    name="name"
+                    [(ngModel)]="newProjectName"
+                    required/>
+         </div>
+         <div class="col-md-2 d-flex align-items-center">
+            <button (click)="onSubmitProjectAdd(newProjectName)"
+                    class="btn-sm">Submit</button>
+        </div>
+         <div class="col-md-2 d-flex align-items-center">
+             <button (click)="onCancelProjectAdd()"
+                     class="btn-sm">Cancel</button>
+         </div>
+    </div> -->
+
     <div class="row mx-3 mt-2 mb-2"
          *ngFor="let project of projectsArr; let i=index">
         <div class="col-md-1">{{project['idProject']}}</div>
         <div class="col-md-6">{{project['projectName']}}</div>
         <div class="col-md-5">
             <button (click)="onDeleteProject(project['idProject'])"
-                    class="delete-btn btn-sm align-items-center border-0">
-                <svg class="float-left border" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    class="delete-btn btn-sm border-0">
+                <svg class="float-left" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                 </svg>
             </button>
-            <!-- <button class="prj-delete-btn btn-sm">Delete</button> -->
         </div>
     </div>
 </div>

@@ -22,3 +22,12 @@ app-root {
 .btn {
     margin: 10px;
 }
+
+.content-header {
+    background-color: var(--header-bg-color);
+}
+
+.delete-btn {
+    background-color: var(--content-bg-color);
+}
+

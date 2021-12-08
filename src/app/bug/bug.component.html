@@ -1,3 +1,75 @@
+<div class="container">
+    <div *ngIf="isAddingBugMode">
+        <div class="row mt-5 ml-3">Enter new bug info:</div>
+        <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
+            <div class="row mx-3 mt-3 mb-5">
+                <div class="col-md-3 d-flex align-items-center px-0">
+                    <input  type="text"
+                            class="form-control mr-1"
+                            placeholder="Project name"
+                            name="projectName"
+                            ngModel
+                            required/>
+                </div>
+                <div class="col-md-4 d-flex align-items-center px-0">
+                    <input  type="text"
+                            class="form-control mx-1"
+                            placeholder="Bug title"
+                            name="bugTitle"
+                            ngModel
+                            required/>
+                </div>
+                <div class="col-md-2 d-flex align-items-center px-0">
+                    <input  type="text"
+                            class="form-control ml-1"
+                            placeholder="Assign to"
+                            name="assignedTo"
+                            ngModel
+                            required/>
+                </div>
+                <div class="col-md-3 d-flex justify-content-center align-items-center">
+                    <button class="btn-sm mr-4" type="submit" 
+                            [disabled]="!bugForm.valid">Add Bug
+                    </button>
+                    <button class="btn-sm"
+                            (click)="onCancelAddBug()">Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row content-header mx-3 mt-4 mb-3 py-1 align-items-center">
+        <div class="col-md-3">Project</div>
+        <div class="col-md-4">Bug</div>
+        <div class="col-md-2">Assigned to</div>
+        <div class="col-md-2">Date</div>
+        <div class="col-md-1">
+            <button *ngIf="!isAddingBugMode"
+                (click)="onAddBugMode()"
+                class="btn-sm">Add
+            </button>
+        </div>
+    </div>
+
+    <div class="row mx-3 mt-2 mb-2"
+         *ngFor="let bug of bugsArr; let i=index">
+        <div class="col-md-3">{{bug['projectName']}}</div>
+        <div class="col-md-4">{{bug['bugTitle']}}</div>
+        <div class="col-md-2">{{bug['assignedTo']}}</div>
+        <div class="col-md-2">{{bug['bugDate']}}</div>
+        <div class="col-md-1 d-flex justify-content-center">{{bug['idBug']}}
+            <button (click)="onDeleteBug(bug['idBug'])"
+                    class="delete-btn btn-sm border-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+
 <!-- <form> -->
     <!-- Added d-inline so that button menus can be on the same line -->
     <div class="dropdown d-inline">
