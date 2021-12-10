@@ -32,15 +32,16 @@ export class ApiService {
                               options);
   }
 
-  addBug(projectName: string, bugTitle: string, assignedTo: string) {
+  addBug(idProject: number, bugTitle: string, bugDescription: string, assignedTo: string) {
     // console.log('Adding Project: ', projectName);
     // const options = { headers: new HttpHeaders({'Content-Type': 'application/json' }),
     //                   body: { projectName: projectName }
     //                 };
-    console.log('Frontend - addBug() projectName: ', projectName);
+    console.log('Frontend - addBug() idProject: ', idProject);
     return this.http.post(  this.bugUrl,
-                            { projectName: projectName,
+                            { idProject: idProject,
                               bugTitle: bugTitle,
+                              bugDescription: bugDescription,
                               assignedTo: assignedTo 
                             } 
                          );

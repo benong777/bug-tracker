@@ -20,9 +20,10 @@ export class BugComponent implements OnInit {
   bugsArr: [] = [];
   projectsArr: [] = [];
   newBugTitle: string = '';
-  newProjectName: string = '';
+  // newProjectName: string = '';
   newIdProject: number = 0;
   newAssignedTo: string = '';
+  newBugDescription: string = '';
 
   selectedProject: string = '';
   selectedIdProject: number = 0;
@@ -92,26 +93,33 @@ export class BugComponent implements OnInit {
       console.log("Submitted form is not valid"); // for debugging
       return;
     }
-    this.newProjectName = form.value.projectName;
+    this.newIdProject = form.value.idProject; // Need these variables??
     this.newBugTitle = form.value.bugTitle;
     this.newAssignedTo = form.value.assignedTo;
+    this.newBugDescription = form.value.bugDescription;
 
-    console.log('projectName: ', this.newProjectName);
+    console.log('idProject: ', this.newIdProject);
     console.log('bugName: ', this.newBugTitle);
     console.log('assignedTo: ', this.newAssignedTo);
+    console.log('bugDescription: ', this.newBugDescription);
 
-    // this.apiService.addBug(this.newProjectName, this.newBugTitle, this.newAssignedTo)
-    //     .subscribe(res => {
-    //         console.log("Frontend - added new bug: ", this.newBugTitle);
-    //         this.getAllBugs();
-    //         this.isAddingBugMode = false;
-    //         this.newBugTitle = '';   // reset name
-    //         this.newProjectName = '';
-    //         this.newAssignedTo = '';
-    //     },
-    //     err => {
-    //         console.log("Frontend: ERROR adding new bug. ", err);
-    //     });
+    this.apiService.addBug(this.newIdProject, this.newBugTitle, this.newBugDescription, this.newAssignedTo)
+        .subscribe(res => {
+            console.log("Frontend - added new bug: ", this.newBugTitle);
+            alert("The new bug has been added!");
+            this.getAllBugs();
+            // Reset variables (needed?)
+            this.newIdProject = 0;
+            this.newBugTitle = '';
+            this.newAssignedTo = '';
+            this.isAddingBugMode = false;
+
+        },
+        err => {
+            console.log("Frontend: ERROR adding new bug. ", err);
+            this.isAddingBugMode = false;
+
+        });
   }
 
   onDeleteBug(idBug: number) {
