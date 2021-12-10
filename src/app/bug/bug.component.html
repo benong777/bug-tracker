@@ -1,34 +1,10 @@
 <div class="container">
     <div *ngIf="isAddingBugMode">
         <div class="border border-dark rounded mx-3 mt-4">
-            <div class="row mt-4 ml-3">Enter new bug info:</div>
+            <div class="row mt-3 mb-1 ml-4">Enter new bug info:</div>
                 <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
-                    <div class="row mx-3 mt-3 mb-5">
-                        <!-- <div class="col-md-3 d-flex align-items-center px-0">
-                            <input  type="text"
-                                    class="form-control mr-1"
-                                    placeholder="Project name"
-                                    name="projectName"
-                                    ngModel
-                                    required/>
-                        </div> -->
-
-
-
-                        <!-- Added d-inline so that button menus can be on the same line -->
-                        <!-- <div class="dropdown d-inline col-md-3 px-0 d-flex justify-content-center border border-primary">
-                            <button class="btn btn-primary dropdown-toggle" type="button" 
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{selectedProject}}
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a  *ngFor="let project of projectsArr; let i=index" 
-                                    (click)="onSelectProject(project['projectName'], project['idProject'])"
-                                    class="dropdown-item">{{project['projectName']}}</a>
-                            </div>
-                        </div> -->
-
-                        <div class="col-md-3 d-flex align-items-center px-0">
+                    <div class="row mx-3 mt-2">
+                        <div class="col-md-3 mx-1 d-flex align-items-center px-0">
                             <select class="form-control" 
                                     name="projectName"
                                     ngModel
@@ -40,24 +16,37 @@
                                 </option>
                             </select>
                         </div>
-
-                        <div class="col-md-4 d-flex align-items-center px-0">
+                    </div>
+                    <div class="row mx-3 d-flex justify-content-between mt-2">
+                        <div class="col-md-6 d-flex align-items-center mb-1 mx-1 px-0">
                             <input  type="text"
-                                    class="form-control mx-1"
+                                    class="form-control"
                                     placeholder="Bug title"
                                     name="bugTitle"
                                     ngModel
                                     required/>
                         </div>
-                        <div class="col-md-2 d-flex align-items-center px-0">
+                        <div class="col-md-3 d-flex align-items-center mt-1 mr-1 ml-1 px-0">
                             <input  type="text"
-                                    class="form-control ml-1"
+                                    class="form-control"
                                     placeholder="Assign to"
                                     name="assignedTo"
                                     ngModel
                                     required/>
                         </div>
-                        <div class="col-md-3 d-flex justify-content-center align-items-center">
+                    </div>
+                    <div class="row mt-2 mb-4 ml-1">
+                        <div class="col-md-8 d-flex align-items-center mb-1 mr-3">
+                            <textarea   class="form-control" 
+                                        rows="4"
+                                        name="notes"
+                                        placeholder="Description"
+                                        maxlength="256"
+                                        ngModel
+                                        required>
+                            </textarea>
+                        </div>
+                        <div class="col-md-4 d-flex justify-content-center align-items-center mt-1">
                             <!-- Type = "submit" will submit the form
                                  Type = "button" to ensure pushing it will not submit this form. -->
                             <button class="btn-sm mr-4" type="submit" 
@@ -102,33 +91,6 @@
     </div>
 </div>
 
-
-<!-- <form> -->
-    <!-- Added d-inline so that button menus can be on the same line -->
-    <div class="dropdown d-inline">
-        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{selectedProject}}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a  *ngFor="let project of projectsArr; let i=index" 
-                (click)="onSelectProject(project['projectName'], project['idProject'])"
-                class="dropdown-item">{{project['projectName']}}</a>
-        </div>
-    </div>
-
-    <div class="dropdown d-inline">
-        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{selectedBug}}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a  *ngFor="let projectBugName of projectBugNames; let i=index" 
-                (click)="onSelectBug(projectBugName)"
-                class="dropdown-item">{{projectBugName}}</a>
-        </div>
-    </div>
-<!-- </form> -->
-
-
 <!-- Loading Spinner-->
 <div class="row">
     <p *ngIf="isLoading">LOADING...</p>
@@ -145,58 +107,7 @@
 </div>
 
 
-<!-- <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm.value)"> -->
-    <!-- <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
-        <div class="form-group mx-4">
-            <input  type="text"
-                    class="form-control"
-                    placeholder="Project"
-                    name="projectName"
-                    ngModel
-                    required/>
-        </div>
-        <div class="form-group mx-4">
-            <input  type="text"
-                    class="form-control"
-                    placeholder="Title"
-                    name="bugTitle"
-                    ngModel
-                    required/>
-        </div>
-        <div class="form-group mx-4">
-            <input  type="text"
-                    class="form-control"
-                    placeholder="Description"
-                    name="bugDescription"
-                    maxlength="256"
-                    ngModel
-                    required/>
-        </div>
-        <div class="form-group mx-4">
-            <input  type="text"
-                    class="form-control"
-                    placeholder="Assigned to"
-                    name="assignedTo"
-                    ngModel
-                    required/>
-        </div>
-        <div class="form-group mx-4">
-            <input  type="text"
-                    class="form-control"
-                    placeholder="Date"
-                    name="date"
-                    ngModel
-                    required/>
-        </div>
-    
-        <div class="d-flex justify-content-center mt-4">
-            <button class="btn btn-sm btn-primary mr-4" 
-                    type="submit" 
-                    [disabled]="!bugForm.valid">Add Bug
-            </button>
-        </div>
-    </form> -->
-    
+
     <form #commentForm="ngForm" (ngSubmit)="onSubmitComment(commentForm)">
         <div class="form-group mx-4">
             <input  type="number"
@@ -234,27 +145,5 @@
     </form>
 
 
-<!-- DELETE -->
-<!-- <button class="btn btn-sm btn-warning" (click)='onDeleteBug(bugNum.value)'>Delete</button> -->
 
-<!-- GET -->
-<!-- <button class="btn btn-sm btn-success" (click)="onGetBug(bugNum.value)">GET</button> -->
-<!-- GET ALL -->
-<!-- <button class="btn btn-sm btn-primary" (click)="onGetAllBugs()">GET-ALL</button> -->
 
-<!-- GET ALL (ARRAY)-->
-<!-- <button class="btn btn-success" (click)="onGetAllArray()">GET-ALL-ARRAY</button> -->
-
-<!-- PUT / update user -->
-<!-- <button class="btn btn-sm btn-primary" (click)="onUpdateBug(bugNum.value, bugForm.value)">Update</button> -->
-
-<!-- Display bugsObj -->
-<!-- <button class="btn btn-primary" (click)="onDisplayObj()">Display</button> -->
-
-<!-- <textarea   class="form-control" 
-                     id="exampleFormControlTextarea1" 
-                     rows="3"
-                     name="notes"
-                     maxlength="256"
-                     ngModel
-                     required></textarea> -->
