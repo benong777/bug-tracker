@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-project',
@@ -13,7 +14,8 @@ export class ProjectComponent implements OnInit {
   projectsArr: [] = [];
   isAddingProjectMode = false;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,
+              private dataService: DataService) { }
 
   ngOnInit(): void {
       this.getProjects();
@@ -25,6 +27,7 @@ export class ProjectComponent implements OnInit {
             res => {
                 console.log('Projects received: ', res.data);
                 this.projectsArr = res.data;
+                this.dataService.projectsArr = this.projectsArr;
                 console.log('ProjectsArr: ', this.projectsArr);
             },
             err => {

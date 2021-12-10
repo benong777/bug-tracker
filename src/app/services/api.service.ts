@@ -53,5 +53,5 @@ export class ApiService {
                     }
     return this.http.delete(this.bugUrl, 
                             options);
-}
+  }
 }

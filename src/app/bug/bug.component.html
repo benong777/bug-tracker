@@ -1,42 +1,75 @@
 <div class="container">
     <div *ngIf="isAddingBugMode">
-        <div class="row mt-5 ml-3">Enter new bug info:</div>
-        <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
-            <div class="row mx-3 mt-3 mb-5">
-                <div class="col-md-3 d-flex align-items-center px-0">
-                    <input  type="text"
-                            class="form-control mr-1"
-                            placeholder="Project name"
-                            name="projectName"
-                            ngModel
-                            required/>
-                </div>
-                <div class="col-md-4 d-flex align-items-center px-0">
-                    <input  type="text"
-                            class="form-control mx-1"
-                            placeholder="Bug title"
-                            name="bugTitle"
-                            ngModel
-                            required/>
-                </div>
-                <div class="col-md-2 d-flex align-items-center px-0">
-                    <input  type="text"
-                            class="form-control ml-1"
-                            placeholder="Assign to"
-                            name="assignedTo"
-                            ngModel
-                            required/>
-                </div>
-                <div class="col-md-3 d-flex justify-content-center align-items-center">
-                    <button class="btn-sm mr-4" type="submit" 
-                            [disabled]="!bugForm.valid">Add Bug
-                    </button>
-                    <button class="btn-sm"
-                            (click)="onCancelAddBug()">Cancel
-                    </button>
-                </div>
-            </div>
-        </form>
+        <div class="border border-dark rounded mx-3 mt-4">
+            <div class="row mt-4 ml-3">Enter new bug info:</div>
+                <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
+                    <div class="row mx-3 mt-3 mb-5">
+                        <!-- <div class="col-md-3 d-flex align-items-center px-0">
+                            <input  type="text"
+                                    class="form-control mr-1"
+                                    placeholder="Project name"
+                                    name="projectName"
+                                    ngModel
+                                    required/>
+                        </div> -->
+
+
+
+                        <!-- Added d-inline so that button menus can be on the same line -->
+                        <!-- <div class="dropdown d-inline col-md-3 px-0 d-flex justify-content-center border border-primary">
+                            <button class="btn btn-primary dropdown-toggle" type="button" 
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{selectedProject}}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a  *ngFor="let project of projectsArr; let i=index" 
+                                    (click)="onSelectProject(project['projectName'], project['idProject'])"
+                                    class="dropdown-item">{{project['projectName']}}</a>
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-3 d-flex align-items-center px-0">
+                            <select class="form-control" 
+                                    name="projectName"
+                                    ngModel
+                                    required> {{ selectedProject }}
+                                <option value="" disabled selected>Select Project</option>
+                                <option *ngFor="let project of projectsArr; let i=index"
+                                        value="{{ project['idProject'] }}">
+                                        {{ project['projectName'] }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-center px-0">
+                            <input  type="text"
+                                    class="form-control mx-1"
+                                    placeholder="Bug title"
+                                    name="bugTitle"
+                                    ngModel
+                                    required/>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-center px-0">
+                            <input  type="text"
+                                    class="form-control ml-1"
+                                    placeholder="Assign to"
+                                    name="assignedTo"
+                                    ngModel
+                                    required/>
+                        </div>
+                        <div class="col-md-3 d-flex justify-content-center align-items-center">
+                            <!-- Type = "submit" will submit the form
+                                 Type = "button" to ensure pushing it will not submit this form. -->
+                            <button class="btn-sm mr-4" type="submit" 
+                                    [disabled]="!bugForm.valid">Add bug
+                            </button>
+                            <button class="btn-sm" type="button"
+                                    (click)="onCancelAddBug()">Cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+        </div>
     </div>
 
     <div class="row content-header mx-3 mt-4 mb-3 py-1 align-items-center">
@@ -57,8 +90,8 @@
         <div class="col-md-3">{{bug['projectName']}}</div>
         <div class="col-md-4">{{bug['bugTitle']}}</div>
         <div class="col-md-2">{{bug['assignedTo']}}</div>
-        <div class="col-md-2">{{bug['bugDate']}}</div>
-        <div class="col-md-1 d-flex justify-content-center">{{bug['idBug']}}
+        <div class="col-md-2">{{bug['bugDate'] | date: 'short' }}</div>
+        <div class="col-md-1 d-flex justify-content-center">
             <button (click)="onDeleteBug(bug['idBug'])"
                     class="delete-btn btn-sm border-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -77,9 +110,9 @@
             {{selectedProject}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a  *ngFor="let projectName of projectNames; let i=index" 
-                (click)="onSelectProject(projectName)"
-                class="dropdown-item">{{projectName}}</a>
+            <a  *ngFor="let project of projectsArr; let i=index" 
+                (click)="onSelectProject(project['projectName'], project['idProject'])"
+                class="dropdown-item">{{project['projectName']}}</a>
         </div>
     </div>
 
@@ -113,7 +146,7 @@
 
 
 <!-- <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm.value)"> -->
-    <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
+    <!-- <form #bugForm="ngForm" (ngSubmit)="onSubmitBug(bugForm)">
         <div class="form-group mx-4">
             <input  type="text"
                     class="form-control"
@@ -157,14 +190,12 @@
         </div>
     
         <div class="d-flex justify-content-center mt-4">
-            <!-- Type = "submit" will submit the form
-                 Type = "button" to ensure pushing it will not submit this form. -->
             <button class="btn btn-sm btn-primary mr-4" 
                     type="submit" 
                     [disabled]="!bugForm.valid">Add Bug
             </button>
         </div>
-    </form>
+    </form> -->
     
     <form #commentForm="ngForm" (ngSubmit)="onSubmitComment(commentForm)">
         <div class="form-group mx-4">

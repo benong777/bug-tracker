@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/auth.service';
 import { ApiService } from '../services/api.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-bug',
@@ -17,9 +18,15 @@ export class BugComponent implements OnInit {
   isLoading: boolean = false;
   isAddingBugMode: boolean = false;
   bugsArr: [] = [];
+  projectsArr: [] = [];
   newBugTitle: string = '';
   newProjectName: string = '';
+  newIdProject: number = 0;
   newAssignedTo: string = '';
+
+  selectedProject: string = '';
+  selectedIdProject: number = 0;
+  projectNames: string [] = [];
 
 
 
@@ -28,7 +35,6 @@ export class BugComponent implements OnInit {
   bugArray: [] = [];
 
   projectArr: [] = [];
-  projectNames: string [] = [];
   projectIds: number [] = [];
 
   projectBugNames: [] = [];
@@ -36,23 +42,23 @@ export class BugComponent implements OnInit {
   bugNames: string[] = [];
   bugIds: number[] = [];
 
-  error: string;
-  selectedProject: string = 'Select Project';
-  selectedIdProject: number = 0;
+  
 
   selectedBug: string = 'Select Bug';
 
   constructor(  private http: HttpClient,
                 private router: Router,
+                private dataService: DataService,
                 private apiService: ApiService,
                 private authService: AuthService )  { }
     
 
   ngOnInit(): void {
+    //-- Initialize projects array
+    this.projectsArr = this.dataService.projectsArr;
     //-- GET all bugs whenever this page/route loads
     this.getAllBugs();
-    // this.getAllProjects();
-    // this.onSelectProject('TE');
+    this.getProjects();
   }
 
   getAllBugs() {
@@ -62,7 +68,8 @@ export class BugComponent implements OnInit {
             res => { 
                 this.bugsArr = res.data;
                 console.log('Getting all bugs');
-                console.log(this.bugsArr);
+                console.log('bugsArr: ', this.bugsArr);
+                this.dataService.bugsArr = this.bugsArr;
                 this.isLoading = false;
             },
             err => {
@@ -92,40 +99,21 @@ export class BugComponent implements OnInit {
     console.log('projectName: ', this.newProjectName);
     console.log('bugName: ', this.newBugTitle);
     console.log('assignedTo: ', this.newAssignedTo);
-    this.apiService.addBug(this.newProjectName, this.newBugTitle, this.newAssignedTo)
-        .subscribe(res => {
-            console.log("Frontend - added new bug: ", this.newBugTitle);
-            this.getAllBugs();
-            this.newBugTitle = '';   // reset name
-            this.newProjectName = '';
-            this.newAssignedTo = '';
-        },
-        err => {
-            console.log("Frontend: ERROR adding new bug. ", err);
-        });
-    this.isAddingBugMode = false;
 
-
-
-    // console.log(form.value);
-    // const title = form.value.bugTitle;
-    // const description = form.value.bugDescription;
-
-    // this.submitBug(title, description)
-    //     .subscribe(
-    //         res => {
-    //             console.log("Login successful!");
-    //             console.log(res);
-    //         }, 
-    //         error => {
-    //             console.log(error);
-    //             this.error = 'Error submitting bug!';
-    //             this.isLoading = false;
-    //         }
-    // );
+    // this.apiService.addBug(this.newProjectName, this.newBugTitle, this.newAssignedTo)
+    //     .subscribe(res => {
+    //         console.log("Frontend - added new bug: ", this.newBugTitle);
+    //         this.getAllBugs();
+    //         this.isAddingBugMode = false;
+    //         this.newBugTitle = '';   // reset name
+    //         this.newProjectName = '';
+    //         this.newAssignedTo = '';
+    //     },
+    //     err => {
+    //         console.log("Frontend: ERROR adding new bug. ", err);
+    //     });
   }
 
-  
   onDeleteBug(idBug: number) {
     this.apiService.deleteBug(idBug)
         .subscribe(res => {
@@ -137,27 +125,59 @@ export class BugComponent implements OnInit {
         });
   }
 
+  // getProjectNames(projectsArr: []) {
+  //   this.projectNames = this.projectsArr.map( projectObj => {
+  //       return projectObj['projectName'];
+  //   });
+  //   this.dataService.projectNames = this.projectNames;
+  // }
 
-
-  onSelectProject(projectName: string) {
-    console.log('Project selected: ', projectName);
-    console.log('projectArr', this.projectArr);
-    this.selectedProject = 'Project: ' + projectName;
-    console.log('Selected project: ', this.selectedProject);
-
-    //-- Get Project ID
-    for (let i=0; i<this.projectArr.length; i++) {
-        console.log('Project name: ', this.projectArr[i]['projectName']);
-        if (this.projectArr[i]['projectName'] === projectName) {
-            console.log('Match found');
-             this.selectedIdProject = this.projectArr[i]['idProject'];
-             break;
-        }
-    }
-    console.log('Selected idProject: ', this.selectedIdProject);
-    //-- Grab all bugs for selected project
-    this.getProjectBugs(projectName);
+  getProjects() {
+    return this.apiService.getProject()
+        .subscribe(
+            res => {
+                this.projectsArr = res.data;
+                this.dataService.projectsArr = this.projectsArr;
+                console.log('ProjectsArr from apiService: ', this.projectsArr);
+            },
+            err => {
+                console.log('Get projects ERROR in apiService: ', err);
+            }
+        );
   }
+
+  onSelectProject(projectName: string, idProject: number) {
+    this.selectedProject = 'Project: ' + projectName;
+    this.selectedIdProject = idProject;
+
+    this.projectsArr = this.dataService.projectsArr;
+    console.log('projectsArr: ', this.projectsArr);
+
+    // //-- Grab all bugs for selected project
+    // this.getProjectBugs(projectName);
+  }
+
+  //===========================================================================
+
+  // onSelectProject(projectName: string) {
+  //   console.log('Project selected: ', projectName);
+  //   console.log('projectArr', this.projectArr);
+  //   this.selectedProject = 'Project: ' + projectName;
+  //   console.log('Selected project: ', this.selectedProject);
+
+  //   //-- Get Project ID
+  //   for (let i=0; i<this.projectArr.length; i++) {
+  //       console.log('Project name: ', this.projectArr[i]['projectName']);
+  //       if (this.projectArr[i]['projectName'] === projectName) {
+  //           console.log('Match found');
+  //            this.selectedIdProject = this.projectArr[i]['idProject'];
+  //            break;
+  //       }
+  //   }
+  //   console.log('Selected idProject: ', this.selectedIdProject);
+  //   //-- Grab all bugs for selected project
+  //   this.getProjectBugs(projectName);
+  // }
 
   getProjectBugs(projectName: string) {
     // console.log('Beginning bug array: ', this.bugArray);

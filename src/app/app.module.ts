@@ -19,6 +19,7 @@ import { ProjectComponent } from './project/project.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { ApiService } from './services/api.service'
+import { DataService } from './services/data.service';
 import { AuthService } from './login/auth.service';
 import { AuthGuardGuard } from './auth-guard.guard';
 
@@ -70,6 +71,7 @@ const appRoutes: Routes = [
   ],
   providers: [ AuthService,
                ApiService,
+               DataService,
                AuthGuardGuard, 
                {
                   provide: HTTP_INTERCEPTORS,
