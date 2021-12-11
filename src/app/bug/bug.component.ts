@@ -165,6 +165,13 @@ export class BugComponent implements OnInit {
     // this.getProjectBugs(projectName);
   }
 
+  onSelectBugRow(index: number) {
+    console.log('Index: ', index);
+    this.router.navigate(['/bug/index']);
+  }
+
+
+
   //===========================================================================
 
   // onSelectProject(projectName: string) {

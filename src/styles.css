@@ -23,11 +23,49 @@ app-root {
     margin: 10px;
 }
 
+.bug-row {
+    background-color: inherit;
+}
+.bug-row:hover {
+    background-color: white;
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.5);
+}
+
 .content-header {
     background-color: var(--header-bg-color);
 }
 
 .delete-btn {
+    background-color: inherit;
+}
+
+.delete-btn:hover {
+    margin-top: 8px;
+    margin-bottom: 8px;
     background-color: var(--content-bg-color);
+}
+
+.notification-card {
+    background-color: inherit;
+}
+.notification-card:hover {
+    background-color: white;
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.5);
+}
+.notification-col {
+    background-color: rgb(226, 223, 223);
+}
+.notification-content {
+    font-size: 0.95rem;
+}
+.notification-date {
+    float: right;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.notification-title {
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
