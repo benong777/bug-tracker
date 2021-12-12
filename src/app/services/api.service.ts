@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
@@ -17,6 +17,14 @@ export class ApiService {
   getProject() {
       return this.http.get<any>(this.projectUrl);
   }
+
+  getComment(idBug: number) {
+      const options = { headers: new HttpHeaders({'Content-Type': 'application/json' }),
+                        params : new HttpParams().set('idBug', idBug)
+                      }   
+      return this.http.get( this.commentUrl + '/' + idBug,
+                            options);
+}
 
   addProject(projectName: string) {
       return this.http.post(this.projectUrl,

@@ -167,7 +167,7 @@ export class BugComponent implements OnInit {
 
   onSelectBugRow(index: number) {
     console.log('Index: ', index);
-    this.router.navigate(['/bug/index']);
+    this.router.navigate(['/comment', index]);
   }
 
 

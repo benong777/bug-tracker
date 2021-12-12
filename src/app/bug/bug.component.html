@@ -101,7 +101,7 @@
 
     <div class="row bug-row mx-3 mt-2 mb-2"
          *ngFor="let bug of bugsArr; let i=index"
-         (click)="onSelectBugRow(i)">
+         (click)="onSelectBugRow(bug['idBug'])">
         <div class="col-md-3">{{bug['projectName']}}</div>
         <div class="col-md-4">{{bug['bugTitle']}}</div>
         <div class="col-md-2">{{bug['assignedTo']}}</div>

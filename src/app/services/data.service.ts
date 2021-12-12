@@ -25,4 +25,9 @@ export class DataService {
   //           }
   //       );
   // }
+
+  getLogs(idBug: number) {
+    console.log("idBug from dataService: ", idBug);
+    return this.apiService.getComment(idBug);
+  }
 }

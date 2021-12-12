@@ -22,6 +22,7 @@ import { ApiService } from './services/api.service'
 import { DataService } from './services/data.service';
 import { AuthService } from './login/auth.service';
 import { AuthGuardGuard } from './auth-guard.guard';
+import { LogComponent } from './bug/log/log/log.component';
 
 
 const appRoutes: Routes = [
@@ -42,6 +43,10 @@ const appRoutes: Routes = [
                                 canActivate: [AuthGuardGuard] },
     { path: 'bug/:id',          component: BugComponent,    
                                 canActivate: [AuthGuardGuard] },
+    { path: 'comment',          component: LogComponent,
+                                canActivate: [AuthGuardGuard] },
+    { path: 'comment/:id',      component: LogComponent,
+                                canActivate: [AuthGuardGuard] },
 
     { path: 'login',            component: LoginComponent  },
     { path: 'signup',           component: SignupComponent },
@@ -59,7 +64,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     LoadingSpinnerComponent,
     ProfileComponent,
-    ProjectComponent
+    ProjectComponent,
+    LogComponent
   ],
   imports: [
     CommonModule,
