@@ -22,7 +22,7 @@ export class ProjectComponent implements OnInit {
   }
 
   getProjects() {
-    this.apiService.getProject()
+    this.dataService.getProjects()
         .subscribe(
             res => {
                 console.log('Projects received: ', res.data);
@@ -33,7 +33,7 @@ export class ProjectComponent implements OnInit {
             err => {
                 console.log('Get projects ERROR: ', err);
             }
-        );
+    );
   }
 
   onDeleteProject(idProject: number) {

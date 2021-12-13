@@ -9,25 +9,18 @@ export class DataService {
   projectsArr: [] = [];
   projectNames: string[] = [];
 
-  returnStr: string = '';
-
   constructor(private apiService: ApiService) { }
 
-  // getProjects() {
-  //   return this.apiService.getProject()
-  //       .subscribe(
-  //           res => {
-  //               this.projectsArr = res.data;
-  //               console.log('ProjectsArr from dataService: ', this.projectsArr);
-  //           },
-  //           err => {
-  //               console.log('Get projects ERROR in dataService: ', err);
-  //           }
-  //       );
-  // }
+  getBugs() {
+    return this.apiService.getBugs();
+  }
+
+  getProjects() {
+    return this.apiService.getProject();
+  }
 
   getLogs(idBug: number) {
-    console.log("idBug from dataService: ", idBug);
+    // console.log("idBug from dataService: ", idBug);
     return this.apiService.getComment(idBug);
   }
 }

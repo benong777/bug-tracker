@@ -14,6 +14,10 @@ export class ApiService {
   constructor(private http: HttpClient,
               private router: Router) { }
 
+  getBugs() {
+      return this.http.get<any>(this.bugUrl);
+  }     
+
   getProject() {
       return this.http.get<any>(this.projectUrl);
   }

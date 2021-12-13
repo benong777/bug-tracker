@@ -1,1 +1,12 @@
-<p>{{ idBug }}</p>
+    <div>{{ currProjectName }}</div>
+    <div>{{ currBugTitle }}</div>
+
+
+<!-- <div *ngFor="let project of projectsArr; let i=index">
+            <div>{{ project['projectName'] }}</div>
+</div> -->
+
+<div *ngFor="let log of logArr; let i=index">
+    <span>{{log['notes']}}</span>
+    <span>{{log['date']}}</span>
+</div>
