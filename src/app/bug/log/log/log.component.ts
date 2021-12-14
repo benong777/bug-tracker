@@ -51,6 +51,7 @@ export class LogComponent implements OnInit {
           if (this.bugsArr[i]['idBug'] === idBug) {
               this.currBugTitle = this.bugsArr[i]['bugTitle'];
               this.currProjectName = this.bugsArr[i]['projectName'];
+              this.currIdProject = this.bugsArr[i]['idProject'];
               // console.log('MATCH found: idBug');
               // console.log('GET BUG DATA - bugTitle: ', this.currBugTitle);
               // console.log('GET BUG DATA - projectName: ', this.currProjectName);
@@ -130,6 +131,17 @@ export class LogComponent implements OnInit {
     // console.log('bugName: ', this.newBugTitle);
     // console.log('assignedTo: ', this.newAssignedTo);
     // console.log('bugDescription: ', this.newBugDescription);
+
+    this.dataService.addComments(this.currIdProject, this.idBug, this.newComment)
+        .subscribe(res => {
+            console.log('New comment added: ', res);
+            this.getAllLogs();
+            this.isAddCommentMode = false;
+        },
+        err => {
+            console.log('Error while adding new comment: ', err);
+            this.isAddCommentMode = false;
+        });
 
   //   this.dataService.addComments(this.idProject, this.idBug, this.newComment)
   //       .subscribe(res => {

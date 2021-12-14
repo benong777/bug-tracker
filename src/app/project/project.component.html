@@ -9,7 +9,7 @@
         </div>
     </div>
     
-    <div *ngIf="isAddingProjectMode">
+    <div *ngIf="isAddingProjectMode" class="border border-dark rounded mx-4 my-4">
         <form #projectForm="ngForm" (ngSubmit)="onSubmitProject(projectForm)">
             <div class="row my-5 ml-4">
                 <div class="col-md-6 d-flex align-items-center px-5">

@@ -28,7 +28,7 @@ export class ApiService {
                       }   
       return this.http.get( this.commentUrl + '/' + idBug,
                             options);
-}
+  }
 
   addProject(projectName: string) {
       return this.http.post(this.projectUrl,
@@ -66,5 +66,14 @@ export class ApiService {
                     }
     return this.http.delete(this.bugUrl, 
                             options);
+  }
+
+  addComment(idProject: number, idBug: number, notes: string) {
+    return this.http.post( this.commentUrl,
+                           {
+                             idProject: idProject,
+                             idBug: idBug,
+                             notes: notes
+                           });
   }
 }

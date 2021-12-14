@@ -98,10 +98,10 @@ export class BugComponent implements OnInit {
     this.newAssignedTo = form.value.assignedTo;
     this.newBugDescription = form.value.bugDescription;
 
-    console.log('idProject: ', this.newIdProject);
-    console.log('bugName: ', this.newBugTitle);
-    console.log('assignedTo: ', this.newAssignedTo);
-    console.log('bugDescription: ', this.newBugDescription);
+    // console.log('idProject: ', this.newIdProject);
+    // console.log('bugName: ', this.newBugTitle);
+    // console.log('assignedTo: ', this.newAssignedTo);
+    // console.log('bugDescription: ', this.newBugDescription);
 
     this.apiService.addBug(this.newIdProject, this.newBugTitle, this.newBugDescription, this.newAssignedTo)
         .subscribe(res => {
@@ -113,7 +113,6 @@ export class BugComponent implements OnInit {
             this.newBugTitle = '';
             this.newAssignedTo = '';
             this.isAddingBugMode = false;
-
         },
         err => {
             console.log("Frontend: ERROR adding new bug. ", err);

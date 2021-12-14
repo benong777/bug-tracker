@@ -25,6 +25,7 @@ export class DataService {
   }
 
   addComments(idProject: number, idBug: number, notes: string) {
+    return this.apiService.addComment(idProject, idBug, notes);
     // this.apiService.addBug(this.newIdProject, this.newBugTitle, this.newBugDescription, this.newAssignedTo)
     //     .subscribe(res => {
     //         console.log("Frontend - added new bug: ", this.newBugTitle);
