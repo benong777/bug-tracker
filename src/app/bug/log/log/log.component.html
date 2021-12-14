@@ -11,8 +11,33 @@
         <div class="col-md-6">Log</div>
         <div class="col-md-3">Submitted by</div>
         <div class="col-md-2">Date</div>
-        <button class="col-md-1 btn-sm">Add</button>
+        <button *ngIf="!isAddCommentMode"
+                class="col-md-1 btn-sm"
+                (click)="onAddComment()">Add
+        </button>
     </div>
+    <form #commentForm="ngForm" (ngSubmit)="onSubmitComment(commentForm)">
+        <div *ngIf="isAddCommentMode"
+             class="row d-flex justify-content-center mx-4 mt-4 mb-5 rounded border border-dark">
+            <div class="col-md-6 d-flex align-items-center my-4">
+                <textarea   class="form-control" 
+                            rows="4"
+                            name="notes"
+                            placeholder="Add new comments"
+                            maxlength="256"
+                            ngModel
+                            required>
+                </textarea>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center align-items-center">
+                <button class="btn-sm mr-4"
+                        [disabled]="!commentForm.valid">Add</button>
+                <button class="btn-sm" 
+                        (click)="onCancelAddComment()">Cancel</button>
+            </div>
+        </div>
+    </form>
+
     <div *ngFor="let log of logArr; let i=index">
         <div class="row content-body">
             <div class="col-md-6 d-flex align-items-center">{{ log['notes'] }}</div>
@@ -20,7 +45,6 @@
             <!-- <div class="col-md-3 d-flex align-items-center">{{ createdBy }}</div> -->
             <div class="col-md-3 d-flex align-items-center">{{ log['date'] | date: 'short'}}</div>
         </div>
-        <hr class="h-line" size="4">
-
+        <hr class="h-line">
     </div>
 </div>

@@ -24,7 +24,7 @@
                                     placeholder="Bug title"
                                     name="bugTitle"
                                     ngModel
-                                    required/>
+                                    required>
                         </div>
                         <div class="col-md-3 d-flex align-items-center mt-1 mr-1 ml-1 px-0">
                             <input  type="text"
@@ -32,7 +32,7 @@
                                     placeholder="Assign to"
                                     name="assignedTo"
                                     ngModel
-                                    required/>
+                                    required>
                         </div>
                     </div>
                     <div class="row mt-2 mb-4 ml-1">
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <div class="row bug-row mx-3 mt-2 mb-2 py-2 rounded"
+    <div class="row bug-row mx-3 mt-1 mb-2 py-3 rounded"
          *ngFor="let bug of bugsArr; let i=index"
          (click)="onSelectBugRow(bug['idBug'])">
         <div class="col-md-3">{{bug['projectName']}}</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
@@ -17,6 +18,9 @@ export class LogComponent implements OnInit {
   logArr: [] = [];
   projectsArr: [] = [];
   bugsArr: [] = [];
+
+  isAddCommentMode: boolean = false;
+  newComment: string = '';
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
@@ -101,10 +105,48 @@ export class LogComponent implements OnInit {
       );
   }
 
-  // getProjectName() {
-  //     for (let i=0; i<this.dataService.projectsArr.length; i++) {
-  //         if (this.dataService.projectsArr[i]['idProject'] === )
-  //     }
-  // }
+  onAddComment() {
+    this.isAddCommentMode = true;
+  }
+
+  onCancelAddComment() {
+    this.isAddCommentMode = false;
+  }
+
+  onSubmitComment(form: NgForm) {
+    if (!form.valid) {
+      console.log("Submitted form is not valid"); // for debugging
+      return;
+    }
+    this.isAddCommentMode = true;
+    this.newComment = form.value.notes;
+    // this.newIdProject = form.value.idProject; // Need these variables??
+    // this.newBugTitle = form.value.bugTitle;
+    // this.newAssignedTo = form.value.assignedTo;
+    // this.newBugDescription = form.value.bugDescription;
+
+    console.log('New comment: ', this.newComment);
+    // console.log('idProject: ', this.newIdProject);
+    // console.log('bugName: ', this.newBugTitle);
+    // console.log('assignedTo: ', this.newAssignedTo);
+    // console.log('bugDescription: ', this.newBugDescription);
+
+  //   this.dataService.addComments(this.idProject, this.idBug, this.newComment)
+  //       .subscribe(res => {
+  //           console.log("Frontend - added new bug: ", this.newBugTitle);
+  //           alert("The new bug has been added!");
+  //           this.getAllBugs();
+  //           // Reset variables (needed?)
+  //           this.newIdProject = 0;
+  //           this.newBugTitle = '';
+  //           this.newAssignedTo = '';
+  //           this.isAddCommentMode = false;
+  //       },
+  //       err => {
+  //           console.log("Frontend: ERROR adding new bug. ", err);
+  //           this.isAddCommentMode = false;
+
+  //       });
+  }
 
 }
