@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row content-header">
+    <div class="row content-header rounded">
         <div class="col-md-4">Project</div>
         <div class="col-md-4">Bug description</div>
     </div>
@@ -7,14 +7,18 @@
         <div class="col-md-4">{{ currProjectName }}</div>
         <div class="col-md-8">{{ currBugTitle }}</div>
     </div> <br>
-    <div class="row content-header">
-        <div class="col-md-8">History</div>
-        <div class="col-md-4">Date submitted</div>
+    <div class="row content-header rounded align-items-center">
+        <div class="col-md-6">Log</div>
+        <div class="col-md-3">Submitted by</div>
+        <div class="col-md-2">Date</div>
+        <button class="col-md-1 btn-sm">Add</button>
     </div>
     <div *ngFor="let log of logArr; let i=index">
         <div class="row content-body">
-            <div class="col-md-8 d-flex align-items-center">{{ log['notes'] }}</div>
-            <div class="col-md-4 d-flex align-items-center">{{ log['date'] | date: 'short'}}</div>
+            <div class="col-md-6 d-flex align-items-center">{{ log['notes'] }}</div>
+            <div class="col-md-3">Created by</div>
+            <!-- <div class="col-md-3 d-flex align-items-center">{{ createdBy }}</div> -->
+            <div class="col-md-3 d-flex align-items-center">{{ log['date'] | date: 'short'}}</div>
         </div>
         <hr class="h-line" size="4">
 

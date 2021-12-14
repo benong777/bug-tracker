@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row content-header align-items-center">
+    <div class="row content-header rounded align-items-center">
         <div class="col-md-1">ID</div>
         <div class="col-md-7">Project</div>
         <div class="col-md-4">
@@ -32,28 +32,7 @@
         </form>
     </div>
 
-    <!-- <div *ngIf="isAddingProjectMode" 
-         class="row my-3 border border-primary">
-         <div class="col-md-6">
-            <input  *ngIf="isAddingProjectMode"
-                    type="text"
-                    class="form-control"
-                    placeholder="Project name"
-                    name="name"
-                    [(ngModel)]="newProjectName"
-                    required/>
-         </div>
-         <div class="col-md-2 d-flex align-items-center">
-            <button (click)="onSubmitProjectAdd(newProjectName)"
-                    class="btn-sm">Submit</button>
-        </div>
-         <div class="col-md-2 d-flex align-items-center">
-             <button (click)="onCancelProjectAdd()"
-                     class="btn-sm">Cancel</button>
-         </div>
-    </div> -->
-
-    <div class="row mx-3 mt-2 mb-2"
+    <div class="row ml-4 pl-1 mr-3 mt-2 mb-2"
          *ngFor="let project of projectsArr; let i=index">
         <div class="col-md-1">{{project['idProject']}}</div>
         <div class="col-md-6">{{project['projectName']}}</div>
