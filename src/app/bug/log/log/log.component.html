@@ -1,12 +1,22 @@
-    <div>{{ currProjectName }}</div>
-    <div>{{ currBugTitle }}</div>
+<div class="container">
+    <div class="row content-header">
+        <div class="col-md-4">Project</div>
+        <div class="col-md-4">Bug description</div>
+    </div>
+    <div class="row content-body">
+        <div class="col-md-4">{{ currProjectName }}</div>
+        <div class="col-md-8">{{ currBugTitle }}</div>
+    </div> <br>
+    <div class="row content-header">
+        <div class="col-md-8">History</div>
+        <div class="col-md-4">Date submitted</div>
+    </div>
+    <div *ngFor="let log of logArr; let i=index">
+        <div class="row content-body">
+            <div class="col-md-8 d-flex align-items-center">{{ log['notes'] }}</div>
+            <div class="col-md-4 d-flex align-items-center">{{ log['date'] | date: 'short'}}</div>
+        </div>
+        <hr class="h-line" size="4">
 
-
-<!-- <div *ngFor="let project of projectsArr; let i=index">
-            <div>{{ project['projectName'] }}</div>
-</div> -->
-
-<div *ngFor="let log of logArr; let i=index">
-    <span>{{log['notes']}}</span>
-    <span>{{log['date']}}</span>
+    </div>
 </div>
