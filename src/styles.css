@@ -47,8 +47,8 @@ app-root {
 }
 
 .delete-btn:hover {
-    margin-top: 8px;
-    margin-bottom: 8px;
+    /* margin-top: 8px;
+    margin-bottom: 8px; */
     background-color: var(--content-bg-color);
 }
 

@@ -63,11 +63,12 @@ export class ProjectComponent implements OnInit {
             console.log("Frontend - added new project: ", this.newProjectName);
             this.getProjects();
             this.newProjectName = '';   // reset name
+            this.isAddingProjectMode = false;
         },
         err => {
             console.log("Frontend: ERROR adding new project. ", err);
+            this.isAddingProjectMode = false;
         });
-    this.isAddingProjectMode = false;
   }
 
   onCancelProjectAdd() {
