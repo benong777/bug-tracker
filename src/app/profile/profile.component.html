@@ -1,1 +1,15 @@
-<p>profile works!</p>
+<div class="container">
+    <div class="row content-header">My Profile</div>
+    <div class="content-body">
+        <h6>Name</h6>
+        <div *ngFor="let user of userArr; let i=index">
+            <div>{{ user['fName'] }}
+                <span>{{ user['lName'] }}</span>
+            </div>
+            <br>
+            <h6>Email</h6>
+            <div>{{ user['email'] }}</div>
+        </div>
+        
+    </div>
+</div>

@@ -9,7 +9,13 @@ export class DataService {
   projectsArr: [] = [];
   projectNames: string[] = [];
 
+  currUser: string = '';
+
   constructor(private apiService: ApiService) { }
+
+  getUser() {
+    return this.apiService.getUser();
+  }
 
   getBugs() {
     return this.apiService.getBugs();
@@ -26,22 +32,5 @@ export class DataService {
 
   addComments(idProject: number, idBug: number, notes: string) {
     return this.apiService.addComment(idProject, idBug, notes);
-    // this.apiService.addBug(this.newIdProject, this.newBugTitle, this.newBugDescription, this.newAssignedTo)
-    //     .subscribe(res => {
-    //         console.log("Frontend - added new bug: ", this.newBugTitle);
-    //         alert("The new bug has been added!");
-    //         this.getAllBugs();
-    //         // Reset variables (needed?)
-    //         this.newIdProject = 0;
-    //         this.newBugTitle = '';
-    //         this.newAssignedTo = '';
-    //         this.isAddingBugMode = false;
-
-    //     },
-    //     err => {
-    //         console.log("Frontend: ERROR adding new bug. ", err);
-    //         this.isAddingBugMode = false;
-
-    //     });
   };
 }

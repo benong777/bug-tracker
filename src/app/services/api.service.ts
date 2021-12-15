@@ -8,11 +8,16 @@ import { Router } from "@angular/router";
 
 export class ApiService {
   private bugUrl      = 'http://localhost:3000/bug';
+  private userUrl     = 'http://localhost:3000/user';
   private projectUrl  = 'http://localhost:3000/project';
   private commentUrl  = 'http://localhost:3000/comment';
 
   constructor(private http: HttpClient,
               private router: Router) { }
+
+  getUser() {
+      return this.http.get<any>(this.userUrl);
+  }
 
   getBugs() {
       return this.http.get<any>(this.bugUrl);
