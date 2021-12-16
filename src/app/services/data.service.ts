@@ -33,4 +33,8 @@ export class DataService {
   addComments(idProject: number, idBug: number, notes: string) {
     return this.apiService.addComment(idProject, idBug, notes);
   };
+
+  editComments(idComment: number, notes: string) {
+    return this.apiService.editComment(idComment, notes);
+  }
 }

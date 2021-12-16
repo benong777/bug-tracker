@@ -15,11 +15,13 @@ export class LogComponent implements OnInit {
   currBugTitle: string = '';
   currIdProject: number = 0;
   currProjectName: string = '';
+  currIdComment: number = 0;
   logArr: [] = [];
   projectsArr: [] = [];
   bugsArr: [] = [];
 
   isAddCommentMode: boolean = false;
+  isEditCommentMode: boolean = false;
   newComment: string = '';
 
   constructor(private http: HttpClient,
@@ -110,6 +112,12 @@ export class LogComponent implements OnInit {
     this.isAddCommentMode = true;
   }
 
+  onEditComment(idComment: number) {
+    this.currIdComment = idComment;
+    console.log('onEditComment - idComment: ', idComment);
+    this.isEditCommentMode = true;
+  }
+
   onCancelAddComment() {
     this.isAddCommentMode = false;
   }
@@ -119,7 +127,6 @@ export class LogComponent implements OnInit {
       console.log("Submitted form is not valid"); // for debugging
       return;
     }
-    this.isAddCommentMode = true;
     this.newComment = form.value.notes;
     // this.newIdProject = form.value.idProject; // Need these variables??
     // this.newBugTitle = form.value.bugTitle;
@@ -132,33 +139,34 @@ export class LogComponent implements OnInit {
     // console.log('assignedTo: ', this.newAssignedTo);
     // console.log('bugDescription: ', this.newBugDescription);
 
-    this.dataService.addComments(this.currIdProject, this.idBug, this.newComment)
-        .subscribe(res => {
-            console.log('New comment added: ', res);
-            this.getAllLogs();
-            this.isAddCommentMode = false;
-        },
-        err => {
-            console.log('Error while adding new comment: ', err);
-            this.isAddCommentMode = false;
-        });
+    if (this.isEditCommentMode) {
+        console.log("In EDIT comment MODE - currIdComment ", this.currIdComment);
+        this.dataService.editComments(this.currIdComment, this.newComment)
+            .subscribe(res => {
+                console.log('New comment has been edited: ', res);
+                this.getAllLogs();
+                this.isEditCommentMode = false;
+            },
+            err => {
+                console.log('Error while editing comment: ', err);
+                this.isEditCommentMode = false;
+            });
+    }
+    else {
+        console.log("In ADD comment MODE");
+        this.dataService.addComments(this.currIdProject, this.idBug, this.newComment)
+            .subscribe(res => {
+                console.log('New comment added: ', res);
+                this.getAllLogs();
+                this.isAddCommentMode = false;
+            },
+            err => {
+                console.log('Error while adding new comment: ', err);
+                this.isAddCommentMode = false;
+            });
+    }
 
-  //   this.dataService.addComments(this.idProject, this.idBug, this.newComment)
-  //       .subscribe(res => {
-  //           console.log("Frontend - added new bug: ", this.newBugTitle);
-  //           alert("The new bug has been added!");
-  //           this.getAllBugs();
-  //           // Reset variables (needed?)
-  //           this.newIdProject = 0;
-  //           this.newBugTitle = '';
-  //           this.newAssignedTo = '';
-  //           this.isAddCommentMode = false;
-  //       },
-  //       err => {
-  //           console.log("Frontend: ERROR adding new bug. ", err);
-  //           this.isAddCommentMode = false;
-
-  //       });
+  
   }
 
 }

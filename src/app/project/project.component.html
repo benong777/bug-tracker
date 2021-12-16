@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row content-header rounded align-items-center">
-        <div class="col-md-1">ID</div>
-        <div class="col-md-7">Project</div>
-        <div class="col-md-4">
+        <div class="col-md-1 col-sm-2 col-2">ID</div>
+        <div class="col-md-7 col-sm-8 col-8">Project</div>
+        <div class="col-md-4 col-sm-2 col-2">
             <button *ngIf="!isAddingProjectMode"
                     (click)="onAddProjectMode()"
                     class="btn-sm float-right mr-2 my-0">Add Project</button>
@@ -34,9 +34,9 @@
 
     <div class="row ml-4 pl-1 mr-3 mt-2 mb-2"
          *ngFor="let project of projectsArr; let i=index">
-        <div class="col-md-1">{{project['idProject']}}</div>
-        <div class="col-md-6">{{project['projectName']}}</div>
-        <div class="col-md-5">
+        <div class="col-md-1 col-sm-2 col-2">{{project['idProject']}}</div>
+        <div class="col-md-6 col-sm-7 col-7">{{project['projectName']}}</div>
+        <div class="col-md-5 col-sm-3 col-3">
             <button (click)="onDeleteProject(project['idProject'])"
                     class="delete-btn btn-sm border-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">

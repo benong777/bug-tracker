@@ -38,7 +38,6 @@ export class ApiService {
   addProject(projectName: string) {
       return this.http.post(this.projectUrl,
                             {projectName: projectName});
-
   } 
 
   deleteProject(idProject: number) {
@@ -80,5 +79,13 @@ export class ApiService {
                              idBug: idBug,
                              notes: notes
                            });
+  }
+
+  editComment(idComment: number, notes: string) {
+    return this.http.put( this.commentUrl,
+                            {
+                              idComment: idComment,
+                              notes: notes
+                            })
   }
 }
