@@ -61,12 +61,12 @@
         </div>
     </div>
 
-    <div class="row rounded content-header align-items-center border border-primary">
+    <div class="row rounded content-header align-items-center">
         <div class="col-md-3">Project</div>
         <div class="col-md-4">Bug</div>
         <div class="col-md-2">Assigned to</div>
-        <div class="col-md-2 border border-primary">Date</div>
-        <div class="col-md-1 d-flex justify-content-center border border-primary">
+        <div class="col-md-2">Date</div>
+        <div class="col-md-1 d-flex justify-content-center">
             <button  *ngIf="!isAddingBugMode"
                 (click)="onAddBugMode()"
                 class="btn-sm">Add
@@ -77,11 +77,11 @@
     <div class="row bug-row mx-4 mt-1 mb-2 px-1 py-3 rounded"
          *ngFor="let bug of bugsArr; let i=index"
          (click)="onSelectBugRow(bug['idBug'])">
-        <div class="col-md-3">{{bug['projectName']}}</div>
-        <div class="col-md-4">{{bug['bugTitle']}}</div>
-        <div class="col-md-2">{{bug['assignedTo']}}</div>
-        <div class="col-md-2">{{bug['bugDate'] | date: 'short' }}</div>
-        <div class="col-md-1 d-flex justify-content-center">
+        <div class="col-md-3 col-sm-3">{{bug['projectName']}}</div>
+        <div class="col-md-4 col-sm-5">{{bug['bugTitle']}}</div>
+        <div class="col-md-2 col-sm-2">{{bug['assignedTo']}}</div>
+        <div class="col-md-2 col-sm-2">{{bug['bugDate'] | date: 'short' }}</div>
+        <div class="col-md-1 col-sm-1 d-flex justify-content-center">
             <button (click)="onDeleteBug(bug['idBug'])"
                     class="delete-btn btn-sm border-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
