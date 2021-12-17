@@ -61,20 +61,20 @@
         </div>
     </div>
 
-    <div class="row rounded content-header align-items-center">
+    <div class="row rounded content-header align-items-center border border-primary">
         <div class="col-md-3">Project</div>
         <div class="col-md-4">Bug</div>
         <div class="col-md-2">Assigned to</div>
-        <div class="col-md-2">Date</div>
-        <div class="col-md-1">
-            <button *ngIf="!isAddingBugMode"
+        <div class="col-md-2 border border-primary">Date</div>
+        <div class="col-md-1 d-flex justify-content-center border border-primary">
+            <button  *ngIf="!isAddingBugMode"
                 (click)="onAddBugMode()"
                 class="btn-sm">Add
             </button>
         </div>
     </div>
 
-    <div class="row bug-row mx-3 mt-1 mb-2 py-3 rounded"
+    <div class="row bug-row mx-4 mt-1 mb-2 px-1 py-3 rounded"
          *ngFor="let bug of bugsArr; let i=index"
          (click)="onSelectBugRow(bug['idBug'])">
         <div class="col-md-3">{{bug['projectName']}}</div>
