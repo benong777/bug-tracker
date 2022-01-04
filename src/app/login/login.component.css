@@ -1,7 +1,14 @@
+.card-login {
+    min-width: 300px;
+}
+
+.register-link {
+    background: none;
+    border: none;
+}
+
 .spinner{
     text-align: center;
 }
 
-.card-login {
-    min-width: 300px;
-}
+

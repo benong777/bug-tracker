@@ -11,8 +11,12 @@ import { AuthService } from './auth.service';
 
 export class LoginComponent implements OnInit {
 
-  loginUserData = { email: '', password: ''};
+  loginUserData = { firstName: '', 
+                    lastName: '', 
+                    email: '', 
+                    password: '' };
   isLoginMode = true;
+  isRegisterMode = false;
   isLoading = false;
   error: string;
 
@@ -50,6 +54,10 @@ export class LoginComponent implements OnInit {
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
+
+  // onRegister() {
+  //   this.isLoginMode = false;
+  // }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
