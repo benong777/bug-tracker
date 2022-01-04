@@ -23,6 +23,7 @@ import { DataService } from './services/data.service';
 import { AuthService } from './login/auth.service';
 import { AuthGuardGuard } from './auth-guard.guard';
 import { LogComponent } from './bug/log/log/log.component';
+import { RegisterComponent } from './register/register.component';
 
 
 const appRoutes: Routes = [
@@ -49,7 +50,7 @@ const appRoutes: Routes = [
                                 canActivate: [AuthGuardGuard] },
 
     { path: 'login',            component: LoginComponent  },
-    { path: 'signup',           component: SignupComponent },
+    { path: 'register',         component: RegisterComponent },
 ];
 
 @NgModule({
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
     LoadingSpinnerComponent,
     ProfileComponent,
     ProjectComponent,
-    LogComponent
+    LogComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,

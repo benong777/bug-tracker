@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(this.loginUserData.email, this.loginUserData.password)
         .subscribe(
             res => {
-              console.log('Login successful: ', res)
+              // console.log('Login successful: ', res)
               //-- Get the token string for the localStorage
               const tokenStr = JSON.stringify(res).split('"');
-              console.log('TOKEN: ', tokenStr[3]);
+              // console.log('TOKEN: ', tokenStr[3]);
               localStorage.setItem('token', tokenStr[3]);
               this.isLoading = false;
               this.authService.isLoggedIn = true;
