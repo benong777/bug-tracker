@@ -114,9 +114,11 @@ export class BugComponent implements OnInit {
   }
 
   onDeleteBug(idBug: number) {
+    console.log('DeleteBug btn pressed - frontend');
     this.apiService.deleteBug(idBug)
         .subscribe(res => {
             this.getAllBugs();
+            console.log('Delete completed - frontend');
         },
         err => {
             console.log('ERROR deleting idBug: ', idBug);

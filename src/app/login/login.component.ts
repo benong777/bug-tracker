@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
                     email: '', 
                     password: '' };
   isLoginMode = true;
-  isRegisterMode = false;
+  // isRegisterMode = false;
   isLoading = false;
   error: string;
 
@@ -70,12 +70,24 @@ export class LoginComponent implements OnInit {
     console.log('Submitted data is valid');
     console.log('Email: ', email);
     console.log('Password: ', password);
-
+    //===============================
+    // this.authService.loginUser(this.loginUserData.email, this.loginUserData.password)
+    // .subscribe(
+    //     res => {
+    //       // console.log('Login successful: ', res)
+    //       //-- Get the token string for the localStorage
+    //       const tokenStr = JSON.stringify(res).split('"');
+    //       // console.log('TOKEN: ', tokenStr[3]);
+    //       localStorage.setItem('token', tokenStr[3]);
+    //       this.isLoading = false;
+    //       this.authService.isLoggedIn = true;
+    //       this.router.navigate(['/bug']);
+    //===============================
     this.isLoading = true;
     if (this.isLoginMode) {
         console.log('In LOGIN Mode!');
         //-- Add Login Mode logic here
-        this.authService.onLogin(email, password)
+        this.authService.loginUser(email, password)
             .subscribe(
                 res => {
                     console.log("Login successful!");
@@ -83,7 +95,8 @@ export class LoginComponent implements OnInit {
                     const tokenStr = JSON.stringify(res).split('"');
                     localStorage.setItem('token', tokenStr[3]);
                     this.isLoading = false;
-                    this.router.navigate(['/users']);
+                    this.authService.isLoggedIn = true;
+                    this.router.navigate(['/bug']);
                 }, 
                 error => {
                     console.log(error);
@@ -99,6 +112,7 @@ export class LoginComponent implements OnInit {
                     console.log(res);
                     localStorage.setItem('token', res.toLocaleString());
                     this.isLoading = false;
+                    this.authService.isLoggedIn = true;
                     this.router.navigate(['/bug']);
                 }, 
                 error => {

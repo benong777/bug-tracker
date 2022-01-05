@@ -48,7 +48,7 @@ app-root {
 .delete-btn:hover {
     /* margin-top: 8px;
     margin-bottom: 8px; */
-    background-color: var(--content-bg-color);
+    background-color: var(--header-bg-color);
 }
 
 .h-line {
@@ -78,5 +78,10 @@ app-root {
     margin-bottom: 0.3rem;
     font-size: 1rem;
     font-weight: bold;
+}
+
+.register-link {
+    font-size: 0.7rem;
+    color: blue;
 }
 

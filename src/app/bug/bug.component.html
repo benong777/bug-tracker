@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <div class="row bug-row mx-4 mt-1 mb-2 px-1 py-3 rounded"
+    <!-- <div class="row bug-row mx-4 mt-1 mb-2 px-1 py-3 rounded"
          *ngFor="let bug of bugsArr; let i=index"
          (click)="onSelectBugRow(bug['idBug'])">
         <div class="col-md-3 col-sm-3">{{bug['projectName']}}</div>
@@ -84,6 +84,27 @@
         <div class="col-md-1 col-sm-1 d-flex justify-content-center">
             <button (click)="onDeleteBug(bug['idBug'])"
                     class="delete-btn btn-sm border-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg>
+            </button>
+        </div>
+    </div> -->
+
+    <div class="row mx-4 mt-1 mb-2 px-1 py-3 rounded"
+         *ngFor="let bug of bugsArr; let i=index">
+         <div class="col-md-11 col-sm-11"
+              (click)="onSelectBugRow(bug['idBug'])">
+             <div class="row bug-row rounded p-1">
+                <div class="col-md-3 col-sm-3">{{bug['projectName']}}</div>
+                <div class="col-md-5 col-sm-5">{{bug['bugTitle']}}</div>
+                <div class="col-md-2 col-sm-2">{{bug['assignedTo']}}</div>
+                <div class="col-md-2 col-sm-2">{{bug['bugDate'] | date: 'short' }}</div>
+            </div>
+        </div>
+        <div class="col-md-1 col-sm-1 d-flex justify-content-center">
+            <button (click)="onDeleteBug(bug['idBug'])"
+                     class="delete-btn btn-sm my-2 border-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                 </svg>
