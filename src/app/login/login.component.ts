@@ -106,7 +106,9 @@ export class LoginComponent implements OnInit {
             );
         // this.router.navigate(['/users']);
     } else {    //-- Sign Up Mode
-        this.authService.onSignUp(email, password)
+        const fName = form.value.fName;
+        const lName = form.value.lName;
+        this.authService.onSignUp(fName, lName, email, password)
             .subscribe(
                 res => {
                     console.log(res);

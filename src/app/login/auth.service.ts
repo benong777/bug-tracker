@@ -19,10 +19,10 @@ export class AuthService {
     constructor(private http: HttpClient,
                 private router: Router) { }
 
-    onSignUp(email: string, password: string) {
+    onSignUp(fName: string, lName: string, email: string, password: string) {
         return this.http.post(this.registerUrl, 
-                              { fName: 'Clark',
-                                lName: 'Kent',
+                              { fName: fName,
+                                lName: lName,
                                 email: email,
                                 password: password,
                                 deletedFlag: 0 }); 
