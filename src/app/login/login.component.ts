@@ -26,10 +26,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // onLoginUser(){
-  //   console.log(this.loginUserData);
-  // this.authService.loginUser(this.loginUserData);
-  // }
   onLoginUser(){
     console.log(this.loginUserData);
     this.authService.loginUser(this.loginUserData.email, this.loginUserData.password)
@@ -55,10 +51,6 @@ export class LoginComponent implements OnInit {
     this.isLoginMode = !this.isLoginMode;
   }
 
-  // onRegister() {
-  //   this.isLoginMode = false;
-  // }
-
   onSubmit(form: NgForm) {
     if (!form.valid) {
       console.log("Submitted form is not valid"); // for debugging
@@ -70,19 +62,7 @@ export class LoginComponent implements OnInit {
     console.log('Submitted data is valid');
     console.log('Email: ', email);
     console.log('Password: ', password);
-    //===============================
-    // this.authService.loginUser(this.loginUserData.email, this.loginUserData.password)
-    // .subscribe(
-    //     res => {
-    //       // console.log('Login successful: ', res)
-    //       //-- Get the token string for the localStorage
-    //       const tokenStr = JSON.stringify(res).split('"');
-    //       // console.log('TOKEN: ', tokenStr[3]);
-    //       localStorage.setItem('token', tokenStr[3]);
-    //       this.isLoading = false;
-    //       this.authService.isLoggedIn = true;
-    //       this.router.navigate(['/bug']);
-    //===============================
+    
     this.isLoading = true;
     if (this.isLoginMode) {
         console.log('In LOGIN Mode!');
@@ -104,7 +84,6 @@ export class LoginComponent implements OnInit {
                     this.isLoading = false;
                 }
             );
-        // this.router.navigate(['/users']);
     } else {    //-- Sign Up Mode
         const fName = form.value.fName;
         const lName = form.value.lName;
