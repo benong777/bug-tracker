@@ -1,3 +1,18 @@
+Bug Tracker system for developers to collaborate on projects.
+
+This Full Stack application was built using:
+1) Angular for the front-end
+2) Node.JS, Express and MySQL for the back-end
+3) REST API was created using NodeJS
+4) JSON Web Token (JWT) was used for user authorization.
+
+Database tables:
+a) User
+      - ID
+      - First name
+      - Last name
+
+
 # BugTracker
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.2.
