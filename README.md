@@ -6,11 +6,19 @@ This Full Stack application was built using:
 3) REST API was created using NodeJS
 4) JSON Web Token (JWT) was used for user authorization.
 
-Database tables:
-a) User
-      - ID
-      - First name
-      - Last name
+To run the frontend:
+a) npm install
+b) ng s
+
+To run the backend:
+a) node app.js
+
+MySQL Database tables:
+a) User - id, first name, last name, email, password
+b) Product - id, product name, description, idBrand, idCategory
+c) Category - id, category name
+d) Brand - id, brand name
+e) Favorite - id, idUser, idProduct, notes
 
 
 # BugTracker
